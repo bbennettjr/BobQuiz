@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<title>Who is Bob Campbell</title>
+	<div id="header"><h1 id="title">Discover the <strong id="highlight">real</strong> Bob Campbell</h1></div>
+	<link rel="stylesheet" type="text/css" href="BobQuiz_style.css">
+	<script type="text/javascript" src="jquery-3.1.1.js"></script>
+	<script type="text/javascript" src="BobQuiz_questions.js"></script>
+	<script type="text/javascript">
+		var answers = new Array(); //questions array defined in BobQuiz_questions.js
+		var currentQuestion = 0;
+		var NUMBER_OF_CHOICES = 5;
+		var SPEED = 150; //milliseconds
+
+		$(document).ready(function() {
+			updateUI();
+			function updateUI() {
+				var question = questions[currentQuestion];
+				var choices = question.choices;
+				var myData;
+				$("#prompt").text(question.prompt);
+				for (var i =  NUMBER_OF_CHOICES - 1; i >= 0; i--) {
+					var myData = $("#choice_" + i + "_text");
+					myData.text(choices[i]);
+				}
+				if (currentQuestion < answers.length) {
+					var choice = $("tr").siblings()[answers[currentQuestion]];
+					$(choice).addClass("active");
+					$("#next").removeClass("inactive");
+				}
+				if (currentQuestion >= answers.length) {$("#next").addClass("inactive");}
+				$("#counter_text").text(currentQuestion + 1);
+				$("#container").animate({opacity:1.0}, SPEED);
+			}
+
+			$("#next").click(function() {
+				var myAnswer = $("#choices").children().children("tr.active");
+				if (myAnswer.length == 0) {
+					alert("Select an answer or the puppy gets it!");
+					return;					
+				}
+				else {
+					//log answer and prep for next question
+					$("tr").removeClass("active");
+					var myAnswer = myAnswer.attr("id");
+					myAnswer = parseInt(myAnswer);
+					if (currentQuestion < questions.length - 1) {
+						answers[currentQuestion] = myAnswer; 
+						currentQuestion++;
+						//do quick animation of transition first
+						$("#container").animate({opacity:0.0}, SPEED, updateUI);
+					} else {
+						$("#container").animate({opacity:0.0}, SPEED, presentScore);
+					}
+				}
+			});
+
+			$("#back").click(function() {
+				if (currentQuestion <= 0) {
+					return;
+				} else {
+					$("#container").animate({opacity:0},SPEED,updateUI);
+					$("tr").removeClass("active");
+					currentQuestion --;
+				}
+			});
+
+			$("tr").click(function() {
+				$(this).toggleClass("active");
+				$(this).siblings("tr.active").toggleClass("active");
+				if ($("#choices").children().children("tr.active").length == 0) {
+					$("#next").addClass("inactive");				
+				} else {
+					$("#next").removeClass("inactive");									
+				}
+			});
+
+			function presentScore() {
+				var final = document.getElementById("final");
+				var score = tallyScore();
+				var totalQuestions = questions.length;
+				var percentScore = Math.round(100 * score / totalQuestions);
+				if (percentScore > 80.0) {
+					$("#prompt").text("Wow! How do you know all of Bob's secrets? Are you God?");
+				} else if (percentScore > 45.0) {
+					$("#prompt").text("Definitely cheating off of Hector.");
+				} else if (percentScore > 25.0) {
+					$("#prompt").text("Mickey still nose more than you.");
+				} else {
+					$("#prompt").text("Who is this? Someone call security...Odie!");
+				}
+				$("#container").animate({opacity:1.0}, SPEED);
+				$("#container_choices").hide();
+				$("#back").hide();
+				$("#counter").hide();
+				$("#next").hide();
+				$("#container_prompt").append(final);
+				$("#final").show();
+				$("#reset").show();
+				$("#finalDisplay").text("Your final score is " + percentScore + "%!\n" + "You correctly answered " + score + " / " + totalQuestions + ".");
+			}
+
+			function tallyScore() {
+				var tally = 0;
+				for (var i = 0; i < questions.length - 1; i++) {
+					if (answers[i] == questions[i].correctAnswer) {
+						tally++;
+					}
+				}
+				return tally;
+			}	
+
+			$("#reset").click(function() {
+				$("#container").animate({opacity:0.0}, 2 * SPEED, updateUI);
+				$("#container_choices").show();
+				$("#back").show();
+				$("#counter").show();
+				$("#next").show();
+				$("#final").hide();
+				$("#reset").hide();
+				currentQuestion = 0;
+				answers = new Array();
+			});
+		});
+</script>
+</head>
+<body>
+	<div id="intro" style="display: none;">
+		<p>
+			<form id="myForm">
+				<h4>Please log in or sign up.</h4>
+				<p><div class="intro">Email:</div><input type="text" id="email" placeholder="Enter your email"/></p>
+				<p><div class="intro">Password:</div><input type="password" id="password" placeholder="Enter your password" /></p>
+				<p><input type="button" id="login" value="Log In" /><input type="button" id="signup" value="Sign Up"></p>
+			</form>
+		</p>
+	</div>
+	<div id="quiz" ">
+		<p>
+			<div id="container">
+				<div id="container_prompt">
+					<h4 id="prompt"></h4>
+				</div>
+				<div id="container_choices">
+					<table id="choices">
+						<tr id="0">
+							<td><h3 id="choice_0_text"></h3></td>
+						</tr>
+						<tr id="1">
+							<td><h3 id="choice_1_text"></h3></td>
+						</tr>
+						<tr id="2">
+							<td><h3 id="choice_2_text"></h3></td>
+						</tr>
+						<tr id="3">
+							<td><h3 id="choice_3_text"></h3></td>
+						</tr>
+						<tr id="4">
+							<td><h3 id="choice_4_text"></h3></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</p>
+		<p>
+			<div id="nav">
+				<div id="back"><p>Back</p></div>
+				<div id="next"><p>Next</p></div>
+			</div>
+		</p>
+		<p>
+			<div id="counter"><p><strong id="counter_text"></strong> / 22</p></div>
+		</p>
+		<div id="final" style="display: none;"><h4 id="finalDisplay"></h4></p></div>
+		<div id="reset" style="display: none;"><p>Reset</p></div>
+	</div>
+</body>
+<footer><div id="myFooter"><p id="copyright">Copyright © The Sticky Mickey Corporation, a subsidiary of Nasty-Wags Intl., all rights reserved.</p></div></footer>
+</html>
