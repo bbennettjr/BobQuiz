@@ -40,8 +40,24 @@
 				var pass = $("#password").val();
 				if (!email && !pass) {
 					alert("Please enter both your email and password.");
+					return;
 				} else {
 					// create the email and pass check 
+					if (typeof(Storage) !== "undefined") {
+						if (localStorage[email]) {
+							if (pass == localStorage[email]) {
+								//animate the acceptance of login credentials
+							} else {
+								alert("Your password does not match.  Please try again.");
+								return;
+							}
+						} else {
+							alert("You must be a new user.  Please click the Sign Up button.");
+						}
+					} else {
+						alert("Sorry there is no web storage support!");
+						return;
+					}
 				}
 			});
 
