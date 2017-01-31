@@ -127,17 +127,17 @@
 </script>
 </head>
 <body>
-	<div id="intro" style="display: none;">
+	<div id="login">
 		<p>
 			<form id="myForm">
 				<h4>Please log in or sign up.</h4>
 				<p><div class="intro">Email:</div><input type="text" id="email" placeholder="Enter your email"/></p>
 				<p><div class="intro">Password:</div><input type="password" id="password" placeholder="Enter your password" /></p>
-				<p><input type="button" id="login" value="Log In" /><input type="button" id="signup" value="Sign Up"></p>
+				<p><input type="button" id="login_button" value="Log In" /><input type="button" id="signup_button" value="Sign Up"></p>
 			</form>
 		</p>
 	</div>
-	<div id="quiz" ">
+	<div id="quiz" style="display: none;">
 		<p>
 			<div id="container">
 				<div id="container_prompt">
@@ -165,7 +165,7 @@
 			</div>
 		</p>
 		<p>
-			<div id="nav">
+			<div id="nav" style="display: none;">
 				<div id="back"><p>Back</p></div>
 				<div id="next"><p>Next</p></div>
 			</div>
