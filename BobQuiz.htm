@@ -35,6 +35,16 @@
 				$("#container").animate({opacity:1.0}, SPEED);
 			}
 
+			$("#login_button").click(function() {
+				var email = $("#email").val();
+				var pass = $("#password").val();
+				if (!email && !pass) {
+					alert("Please enter both your email and password.");
+				} else {
+					// create the email and pass check 
+				}
+			});
+
 			$("#next").click(function() {
 				var myAnswer = $("#choices").children().children("tr.active");
 				if (myAnswer.length == 0) {
