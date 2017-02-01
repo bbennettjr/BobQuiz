@@ -79,6 +79,11 @@
 						return;
 					} else {
 						localStorage.setItem(email, pass);
+						//animate change to sign up form and hide myForm, set cookie
+						$("#login").animate({opacity: '0.0'}, "fast", function() {
+							$("#login").hide();
+							$("#signupForm").show();
+						});
 					}
 				}
 			});
