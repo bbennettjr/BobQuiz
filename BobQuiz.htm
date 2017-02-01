@@ -38,7 +38,7 @@
 			$("#login_button").click(function() {
 				var email = $("#email").val();
 				var pass = $("#password").val();
-				if (!email && !pass) {
+				if (!email || !pass) {
 					alert("Please enter both your email and password.");
 					return;
 				} else {
@@ -70,7 +70,7 @@
 			$("#signup_button").click(function() {
 				var email = $("#email").val();
 				var pass = $("#password").val();
-				if (!email && !pass) {
+				if (!email || !pass) {
 					alert("Please enter both your email and password.");
 					return;
 				} else {
