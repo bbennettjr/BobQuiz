@@ -47,12 +47,18 @@
 						if (localStorage[email]) {
 							if (pass == localStorage[email]) {
 								//animate the acceptance of login credentials
+								$("#login").animate({opacity: '0.0'}, "fast", function() {
+								$("#login").hide();
+								$("#quiz").show();
+								$("#nav").show();
+								});
 							} else {
 								alert("Your password does not match.  Please try again.");
 								return;
 							}
 						} else {
 							alert("You must be a new user.  Please click the Sign Up button.");
+							return;
 						}
 					} else {
 						alert("Sorry there is no web storage support!");
@@ -70,6 +76,7 @@
 				} else {
 					if (localStorage[email]) {
 						alert("You're already signed up.  Please Log In.");
+						return;
 					} else {
 						localStorage.setItem(email, pass);
 					}
