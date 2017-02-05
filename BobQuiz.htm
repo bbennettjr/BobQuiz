@@ -104,11 +104,7 @@
 				function welcomeMsg() {
 						$(container).hide();
 						var welcText = "Welcome";
-						if (container == "#myForm") {
-							welcText += " back to the jungle, ";
-						} else {
-							welcText += " to Bob's quiz, "
-						}
+						container == "#myForm" ? welcText += " back to the jungle, ":welcText += " to Bob's quiz, "; // Fast enumeration of if statement
 						welcText += name + "!";
 						$("#welcome_header").text(welcText);
 						$("#welcome").show();
