@@ -49,11 +49,7 @@
 						if (localStorage[email]) {
 							if (pass == localStorage[email]) {
 								//animate the acceptance of login credentials
-								$("#login").animate({opacity: '0.0'}, "fast", function() {
-								$("#login").hide();
-								$("#quiz").show();
-								$("#nav").show();
-								});
+								welcomeMsg(email);
 							} else {
 								alert("Your password does not match.  Please try again.");
 								return;
@@ -93,12 +89,28 @@
 
 			$("#finish_button").click(function() {
 				setCookie(emailtemp, $("#firstName").val() + "," + $("#lastName").val());
-				$("#login").animate({opacity: '0.0'}, "fast", function() {
-					$("#login").hide();
-					$("#quiz").show();
-					$("#nav").show();
-				});
+				//animate the acceptance of login credentials
+				welcomeMsg(emailtemp);
 			});
+
+			function welcomeMsg(id) {
+				var name = getCookieValue(id);
+				if (name) {
+					$("#login").animate({opacity: '0.0'}, "fast", function() {
+						$("#login").hide();
+						$("#welcome").show();
+						$("#welcome_header").val("Welcome back, " + name);
+						document.setTimeout($("#welcome").animate({opacity: 0.0}, "fast", function() {
+							$("#welcome").hide();
+							$("#quiz").show();
+							$("#nav").show();
+						}), 3000);
+					});
+				} else {
+					alert("Sorry but we could not find your name in our registry");
+				}
+
+			}
 
 			$("#next").click(function() {
 				var myAnswer = $("#choices").children().children("tr.active");
@@ -206,6 +218,7 @@
 				<p><div class="intro">Last Name:</div><input type="text" id="lastName" placeholder="Enter your last name" /></p>
 				<p><input type="button" id="finish_button" value="Finish"></p>
 			</form>
+			<div id="welcome"><h4 id="welcome_header"></h4></div>
 		</p>
 	</div>
 	<div id="quiz" style="display: none;">
