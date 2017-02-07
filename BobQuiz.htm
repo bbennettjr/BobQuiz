@@ -208,6 +208,8 @@
 				currentQuestion = 0;
 				answers = new Array();
 			});
+
+			$('[data-toggle="tooltip"]').tooltip();
 		});
 </script>
 </head>
@@ -221,14 +223,17 @@
 			<li class="active"><a href="#">Home</a></li>
 			<li><a href="#">Leaderboards</a></li>
 			<li><a href="#">About</a></li>
-			<li><a href="#">Contact</a></li>
+		</ul>
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
+			<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 		</ul>
 	</div>
 </nav>
 <div class="container">
 	<div class="jumbotron">
 		<h1>The Campbell Clan Quiz</h1>
-		<p>Discover the real Bob Campbell and other members of the family.</p>
+		<p>Discover the real Bob Campbell and why Brad is scared sh*tless.</p>
 	</div>
 </div>
 	<div id="login">
@@ -287,6 +292,20 @@
 		<div id="final" style="display: none;"><h4 id="finalDisplay"></h4></p></div>
 		<div id="reset" style="display: none;"><p>Reset</p></div>
 	</div>
+	<div class="container">
+		<blockquote>
+			<p>Mickey Bite!</p>
+			<footer>Annoyed Bob in <cite title="Source Title">The Kids Came Home</cite></footer>
+		</blockquote>
+	</div>
+	<nav class="navbar navbar-default navbar-fixed-bottom">
+		<div class="container-fluid">
+			<p class="text-center navbar-text">Copyright © The Sticky Mickey Corporation, a subsidiary of Nasty-Wags Intl., all rights reserved.</p>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#" data-toggle="tooltip" data-placement="auto" title="He's gonna need it.">Donate</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</div>
+	</nav>
 </body>
-<footer><div id="myFooter"><p id="copyright">Copyright © The Sticky Mickey Corporation, a subsidiary of Nasty-Wags Intl., all rights reserved.</p></div></footer>
 </html>
