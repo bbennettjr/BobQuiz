@@ -43,6 +43,7 @@
 			$("#login_button").click(function() {
 				var email = $("#email").val();
 				var pass = $("#pwd").val();
+				var name;
 				removeAlert("#logInAlert");
 				if (!email || !pass) {
 					$("#logInAlert").addClass("alert-warning").text("Please enter both your email and password.").show();
@@ -52,9 +53,16 @@
 					if (typeof(Storage) !== "undefined") {
 						if (localStorage[email]) {
 							if (pass == localStorage[email]) {
+								name = getCookieValue(email);
+								name = name.replace(/[\s,]\w*/,""); // RegEx to search for space or comma and rest of string and replace with ""
 								//animate the acceptance of login credentials
 								$("#logInAlert").addClass("alert-success").text("Success!").show();
-								showWelcome("#myForm", email);
+								$("#logInForm").modal('toggle');
+								$("#home").fadeOut();
+								$("#navbarLoggedOut").fadeOut();
+								$("#welcomeMsg").text("Welcome, " + name);
+								$("#navbarLoggedIn").fadeIn();
+								$("#quiz").fadeIn();
 							} else {
 								$("#logInAlert").addClass("alert-danger").text("Your password does not match! Please try again.").show();
 								return;
@@ -84,13 +92,16 @@
 						return;
 					} else {
 						localStorage.setItem(email, pass);
-						emailtemp = email;
+						setCookie(email, $("#firstName").val() + " " + $("#lastName").val());
 						//animate change to sign up form and hide myForm, set cookie
 						$("#signUpAlert").addClass("alert-success").text("Success!").show();
-						$("#myForm").animate({opacity: '0.0'}, "fast", function() {
-							$("#myForm").hide();
-							$("#signupForm").show();
-						});
+						$("#signupForm").modal('toggle');
+						$("#home").fadeOut();
+						$("#home").fadeOut();
+						$("#navbarLoggedOut").fadeOut();
+						$("#welcomeMsg").text("Welcome, " + $("#firstName").val());
+						$("#navbarLoggedIn").fadeIn();
+						$("#quiz").fadeIn();
 					}
 				}
 			});
@@ -99,12 +110,6 @@
 			function removeAlert(cl) {
 				$(cl).removeClass("alert-success alert-info alert-warning alert-danger");
 			}
-
-			$("#finish_button").click(function() {
-				setCookie(emailtemp, $("#firstName").val() + " " + $("#lastName").val());
-				//animate the acceptance of login credentials
-				showWelcome("#signupForm", emailtemp);
-			});
 
 			function showWelcome(container, id) {
 				var name = getCookieValue(id);
@@ -236,21 +241,23 @@
 				<li><a href="#">Leaderboards</a></li>
 				<li><a href="#">About</a></li>
 			</ul>
-			<ul class="nav navbar-nav navbar-right">
+			<ul id="navbarLoggedOut" class="nav navbar-nav navbar-right">
 				<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log In</a></li>
 				<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+			</ul>
+			<ul id="navbarLoggedIn" style="display: none;" class="nav navbar-nav navbar-right">
+				<li><p id="welcomeMsg" class="navbar-text"></p></li>
+				<li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
 			</ul>
 		</div>
 	</nav>
 	<!-- Jumbotron -->
-	<div class="container">
+	<div id="home" class="container">
 		<div class="jumbotron">
 			<h1>The Campbell Clan Quiz</h1>
 			<p><span class="label label-primary">Discover</span> the real Bob Campbell and why Brad should be <span class="label label-danger">scared.</span></p>
 		</div>
-	</div>
 	<!-- Home page buttons -->
-	<div class="container">
 		<div class="row">
 			<div class="col-sm-6 col-md-4">
 				<div class="thumbnail">
@@ -395,25 +402,6 @@
 			</div>
 		</div>
 	</div>
-<!-- 
-	<div id="login">
-		<p>
-			<form id="myForm">
-				<h4>Please log in or sign up.</h4>
-				<p><div class="intro">Email:</div><input type="text" id="email" placeholder="Enter your email"/></p>
-				<p><div class="intro">Password:</div><input type="password" id="password" placeholder="Enter your password" /></p>
-				<p><input type="button" id="login_button" value="Log In" /><br/><input type="button" id="signup_button" value="Sign Up"></p>
-			</form>
-			<form id="signupForm" style="display: none;">
-				<h4>Please enter your name.</h4>
-				<p><div class="intro">First Name:</div><input type="text" id="firstName" placeholder="Enter your first name"/></p>
-				<p><div class="intro">Last Name:</div><input type="text" id="lastName" placeholder="Enter your last name" /></p>
-				<p><input type="button" id="finish_button" value="Finish"></p>
-			</form>
-			<div id="welcome" style="display: none;"><h4 id="welcome_header"></h4></div>
-		</p>
-	</div>
-	 -->
 	 <!--  -->
 	<div id="quiz" style="display: none;">
 		<p>
