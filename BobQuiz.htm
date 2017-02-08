@@ -170,8 +170,8 @@
 			});
 
 			$("tr").click(function() {
-				$(this).toggleClass("active");
-				$(this).siblings("tr.active").toggleClass("active");
+				$(this).toggleClass("success");
+				$(this).siblings("tr.success").toggleClass("success");
 				if ($("#choices").children().children("tr.active").length == 0) {
 					$("#next").addClass("inactive");				
 				} else {
@@ -234,10 +234,10 @@
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Campbell Clan</a>
+				<a class="navbar-brand" href="#home">Campbell Clan</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#">Home</a></li>
+				<li class="active"><a href="#home">Home</a></li>
 				<li><a href="#">Leaderboards</a></li>
 				<li><a href="#">About</a></li>
 			</ul>
@@ -402,12 +402,57 @@
 			</div>
 		</div>
 	</div>
-	 <!--  -->
+	 <!-- Tab and Quiz Arena -->
+	 <div id="quiz" style="display: none;" class="container">
+	 	<!-- Pill navigator -->
+	 	<ul class="nav nav-tabs nav-justified">
+	 		<li class="active"><a href="#bob" data-toggle="pill">The Real Bob</a></li>
+	 		<li><a href="#johnCorinna" data-toggle="pill">JC &amp; the Girls</a></li>
+	 		<li><a href="#edRich" data-toggle="pill">Ed &amp; Rich</a></li>
+	 		<li><a href="#eliseDianeKristen" data-toggle="pill">The Royalty</a></li>
+	 	</ul>
+
+	 	<!-- Pill content -->
+	 	<div class="tab-content">
+	 		<div id="#bob" class="tab-pane fade in active">
+	 			<div class="table-responsive">
+	 				<table class="table table-hover">
+	 					<thead>
+	 						<tr style="pointer-events: none;">
+	 							<th id="prompt"></th>
+	 						</tr>
+	 					</thead>
+	 					<tbody id="choices">
+	 						<tr><td id="choice_0_text"></td></tr>
+	 						<tr><td id="choice_1_text"></td></tr>
+	 						<tr><td id="choice_2_text"></td></tr>
+	 						<tr><td id="choice_3_text"></td></tr>
+	 						<tr><td id="choice_4_text"></td></tr>
+	 					</tbody>
+	 				</table>
+	 				
+	 			</div>
+	 		</div>
+	 		<div id="#johnCorinna" class="tab-pane fade">
+	 			<h3>Menu 1</h3>
+	 			<p>Some content in menu 1.</p>
+	 		</div>
+	 		<div id="#edRich" class="tab-pane fade">
+	 			<h3>Menu 2</h3>
+	 			<p>Some content in menu 2.</p>
+	 		</div>
+	 		<div id="#eliseDianeKristen" class="tab-pane fade">
+	 			<h3>Menu 3</h3>
+	 			<p>Some content in menu 2.</p>
+	 		</div>
+	 	</div>
+	 </div>
+
 	<div id="quiz" style="display: none;">
 		<p>
 			<div id="container">
 				<div id="container_prompt">
-					<h4 id="prompt"></h4>
+					<h4 id="prompt" class="text-center"></h4>
 				</div>
 				<div id="container_choices">
 					<table id="choices">
@@ -442,15 +487,19 @@
 		<div id="final" style="display: none;"><h4 id="finalDisplay"></h4></p></div>
 		<div id="reset" style="display: none;"><p>Reset</p></div>
 	</div>
+
+	<!-- Bob Quotes -->
 	<div class="container">
 		<blockquote>
 			<p>Mickey Bite!</p>
 			<footer>Annoyed Bob in <cite title="Source Title">The Kids Came Home</cite></footer>
 		</blockquote>
 	</div>
+
+	<!-- Footer -->
 	<nav class="navbar navbar-default navbar-fixed-bottom">
 		<div class="container-fluid">
-			<p class="text-center navbar-text">Copyright © The Sticky Mickey Corporation, a subsidiary of Nasty-Wags Intl., all rights reserved.</p>
+			<p class="text-center navbar-text">Copyright &copy; The Sticky Mickey Corporation, a subsidiary of Nasty-Wags Intl., all rights reserved.</p>
 			<ul class="nav navbar-nav navbar-right">
 				<li><a href="#" data-toggle="tooltip" data-placement="auto" title="He's gonna need it.">Donate</a></li>
 				<li><a href="#">Contact</a></li>
