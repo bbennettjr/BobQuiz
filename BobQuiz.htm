@@ -39,11 +39,13 @@
 				$("#container").animate({opacity:1.0}, SPEED);
 			}
 
+			// Log in to the website
 			$("#login_button").click(function() {
 				var email = $("#email").val();
-				var pass = $("#password").val();
+				var pass = $("#pwd").val();
+				removeAlert("#logInAlert");
 				if (!email || !pass) {
-					alert("Please enter both your email and password.");
+					$("#logInAlert").addClass("alert-warning").text("Please enter both your email and password.").show();
 					return;
 				} else {
 					// create the email and pass check 
@@ -51,13 +53,14 @@
 						if (localStorage[email]) {
 							if (pass == localStorage[email]) {
 								//animate the acceptance of login credentials
+								$("#logInAlert").addClass("alert-success").text("Success!").show();
 								showWelcome("#myForm", email);
 							} else {
-								alert("Your password does not match.  Please try again.");
+								$("#logInAlert").addClass("alert-danger").text("Your password does not match! Please try again.").show();
 								return;
 							}
 						} else {
-							alert("You must be a new user.  Please click the Sign Up button.");
+							$("#logInAlert").addClass("alert-info").text("You must be a new user. Please Sign Up first.").show();
 							return;
 						}
 					} else {
@@ -67,20 +70,23 @@
 				}
 			});
 
+			// Sign up for the website
 			$("#signup_button").click(function() {
-				var email = $("#email").val();
-				var pass = $("#password").val();
+				var email = $("#signUpEmail").val();
+				var pass = $("#signUpPwd").val();
+				removeAlert("#logInAlert");
 				if (!email || !pass) {
-					alert("Please enter both your email and password.");
+					$("#signUpAlert").addClass("alert-warning").text("Please enter both your email and password.").show();
 					return;
 				} else {
 					if (localStorage[email]) {
-						alert("You're already signed up.  Please Log In.");
+						$("#signUpAlert").addClass("alert-info").text("You're already signed up! Please Log In.").show();
 						return;
 					} else {
 						localStorage.setItem(email, pass);
 						emailtemp = email;
 						//animate change to sign up form and hide myForm, set cookie
+						$("#signUpAlert").addClass("alert-success").text("Success!").show();
 						$("#myForm").animate({opacity: '0.0'}, "fast", function() {
 							$("#myForm").hide();
 							$("#signupForm").show();
@@ -88,6 +94,11 @@
 					}
 				}
 			});
+
+			// Remove the alert status before placing a new status
+			function removeAlert(cl) {
+				$(cl).removeClass("alert-success alert-info alert-warning alert-danger");
+			}
 
 			$("#finish_button").click(function() {
 				setCookie(emailtemp, $("#firstName").val() + " " + $("#lastName").val());
@@ -210,7 +221,6 @@
 				answers = new Array();
 			});
 
-			// $('[data-toggle="tooltip"]').tooltip();
 		});
 </script>
 </head>
@@ -250,7 +260,7 @@
 							<h3 class="text-center">Sign Up</h3>
 						</div>
 					</a>
-					<div class="caption">
+					<div style="" class="caption">
 						<p class="text-justify">If you're like this guy -- Russian-Italian Jewish, with hair covering every inch and a bonafide man-bun in the post-Wall era -- then we suggest you sign up already.</p>
 					</div>
 				</div>
@@ -264,7 +274,7 @@
 						</div>
 					</a>
 					<div class="caption">
-						<p class="text-justify">Mickey went out into the cold to the zombie server farm.  There he sourced your username and password from the nothingness, so the least you could do is log in with your credentials.</p>
+						<p class="text-justify">Mickey went out into the cold to the zombie server farm.  There he sourced your username and password from the desecration, so the least you could do is log in with your credentials.</p>
 					</div>
 				</div>
 			</div>
@@ -309,13 +319,13 @@
 						<div class="form-group">
 							<label class="control-label col-sm-4" for="email">Email:</label>
 							<div class="col-sm-6">
-								<input type="text" class="form-control" id="email" placeholder="Enter email">
+								<input type="text" class="form-control" id="signUpEmail" placeholder="Enter email">
 							</div>
 						</div>	
 						<div class="form-group">
 							<label class="control-label col-sm-4" for="pwd">Password:</label>
 							<div class="col-sm-6">
-								<input type="password" class="form-control" id="pwd" placeholder="Enter password">
+								<input type="password" class="form-control" id="signUpPwd" placeholder="Enter password">
 							</div>
 						</div>
 						<div class="form-group"> 
@@ -327,13 +337,15 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-4 col-sm-6">
-								<button type="submit" class="btn btn-primary">Submit</button>
+								<button id="signup_button" type="submit" class="btn btn-primary">Submit</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
+					<div id="signUpAlert" class="alert fade in text-left" role="alert" style="display: none;">
+					</div>
 				</div>
 			</div>
 		</div>
@@ -370,13 +382,15 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-4 col-sm-6">
-								<button type="button" class="btn btn-primary">Go!</button>
+								<button type="button" id="login_button" class="btn btn-primary">Log In</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
 							</div>
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
+					<div id="logInAlert" class="alert fade in text-left" role="alert" style="display: none;">
+					</div>
 				</div>
 			</div>
 		</div>
