@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<title>Who is Bob Campbell</title>
 	<link rel="stylesheet" type="text/css" href="./css/BobQuiz_style.css">
-	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 	<script type="text/javascript" src="./js/jquery-3.1.1.js"></script>
+	<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./js/CookieFunctions.js"></script>
 	<script type="text/javascript" src="./js/BobQuiz_questions.js"></script>
@@ -403,23 +403,24 @@
 		</div>
 	</div>
 	 <!-- Tab and Quiz Arena -->
-	 <div id="quiz" style="display: none;" class="container">
+	 <div id="quiz" class="container" style="display: none;">
 	 	<!-- Pill navigator -->
-	 	<ul class="nav nav-tabs nav-justified">
-	 		<li class="active"><a href="#bob" data-toggle="pill">The Real Bob</a></li>
-	 		<li><a href="#johnCorinna" data-toggle="pill">JC &amp; the Girls</a></li>
-	 		<li><a href="#edRich" data-toggle="pill">Ed &amp; Rich</a></li>
-	 		<li><a href="#eliseDianeKristen" data-toggle="pill">The Royalty</a></li>
-	 	</ul>
-
+	 	<p>
+	 		<ul class="nav nav-tabs nav-justified">
+	 			<li class="active"><a href="#bob" data-toggle="tab">The Real Bob</a></li>
+	 			<li><a href="#johnCorinna" data-toggle="tab">JC &amp; the Girls</a></li>
+	 			<li><a href="#edRich" data-toggle="tab">Ed &amp; Rich</a></li>
+	 			<li><a href="#eliseDianeKristen" data-toggle="tab">The Royalty</a></li>
+	 		</ul>
+	 	</p>
 	 	<!-- Pill content -->
-	 	<div class="tab-content">
-	 		<div id="#bob" class="tab-pane fade in active">
+	 	<div id="tabs" class="tab-content">
+	 		<div id="bob" class="tab-pane fade in active">
 	 			<div class="table-responsive">
 	 				<table class="table table-hover">
 	 					<thead>
 	 						<tr style="pointer-events: none;">
-	 							<th id="prompt"></th>
+	 							<h3 id="prompt" class="text-center"></h3>
 	 						</tr>
 	 					</thead>
 	 					<tbody id="choices">
@@ -430,18 +431,25 @@
 	 						<tr><td id="choice_4_text"></td></tr>
 	 					</tbody>
 	 				</table>
-	 				
 	 			</div>
+	 			<div class="progress">
+	 				<div id="progressBar" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="70"
+	 				aria-valuemin="0" aria-valuemax="22" style="width:50%"></div>
+	 			</div>
+	 			<ul class="pager">
+	 				<li class="previous"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a></li>
+	 				<li class="next"><a href="#">Next <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+	 			</ul>
 	 		</div>
-	 		<div id="#johnCorinna" class="tab-pane fade">
+	 		<div id="johnCorinna" class="tab-pane fade">
 	 			<h3>Menu 1</h3>
 	 			<p>Some content in menu 1.</p>
 	 		</div>
-	 		<div id="#edRich" class="tab-pane fade">
+	 		<div id="edRich" class="tab-pane fade">
 	 			<h3>Menu 2</h3>
 	 			<p>Some content in menu 2.</p>
 	 		</div>
-	 		<div id="#eliseDianeKristen" class="tab-pane fade">
+	 		<div id="eliseDianeKristen" class="tab-pane fade">
 	 			<h3>Menu 3</h3>
 	 			<p>Some content in menu 2.</p>
 	 		</div>
