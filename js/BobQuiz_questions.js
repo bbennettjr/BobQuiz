@@ -1,4 +1,4 @@
-		var questions = [{prompt: "What is Bob's real age?", choices: ["Too old to care", 65, "Science can't measure back that far", 56, "Go ahead, ask him"], correctAnswer: 4},
+		var guysQuestions = [{prompt: "What is Bob's real age?", choices: ["Too old to care", 65, "Science can't measure back that far", 56, "Go ahead, ask him"], correctAnswer: 4},
 		{prompt: "Bob's personality is best described as:", choices: ["Cuddly", "Loveable", "Huggable", "Snuggly", "Nuzzlebug"], correctAnswer: 4},
 		{prompt: "What does Bob care about most?", choices: ["His family", "His son-in-law", "His quiet time", "His dog", "Long bike rides"], correctAnswer: 0},
 		{prompt: "What is Bob's favorite inanimate object?", choices: ["Chapstick", "McDonald's fries", "Steins", "Grapes", "Bottle Caps"], correctAnswer: 2},
@@ -20,3 +20,25 @@
 		{prompt: "Bob's favorite type of hug:", choices: ["One-armed hug", "Bear-hug", "Side-hug", "Stiff-hug", "Wiggle-hug"], correctAnswer: 0},
 		{prompt: "On a daily basis Bob most identifies with:", choices: ["Buddy the Elf", "Robin Hood", "Prince Humperdinck", "Cosmo Kramer", "Michael Scott"], correctAnswer: 2},
 		{prompt: "Bob's celeb crush:", choices: ["Bruce Willis", "Vin Diesel", "Jason Statham", "Howie Mandel", "Patrick Stewart"], correctAnswer: 1}];
+
+		var girlsQuestions = [];
+		var edRichQuestinos = [];
+		var royaltyQuestions = [];
+
+		// Quiz Object
+		function Quiz(name, questions) {
+			this.name = name;
+			this.questions = questions;
+			this.answers = new Array();
+			this.currentQuestion = 0;
+			// Update current question
+			//.....
+
+			//Add new answer
+		}
+
+		function quizApplet(quiz) {
+			this.quizes = [quiz];
+			//Add new quiz to applet
+			//Display correct quiz
+		}
