@@ -45,19 +45,39 @@
 			this.getCurrentCorrectAnswer = function() {
 				return this.correctAnswers[this.currentQuestion];
 			}
-			//Update current question
-			this.updateCurrentQuestion = function() {
-				return this.currentQuestion++;
+			//Set current question
+			this.setCurrentQuestion = function() {
+				this.currentQuestion++;
 			}
 			//Add new answer
 			this.addNewAnswer = function(ans) {
-				this.answers[this.answers.length] = ans;
+				this.answers.push(ans);
 			}
 		}
 
 		// Quiz Applet Object
-		function quizApplet(quiz) {
-			this.quizes = [quiz];
+		function QuizApplet(myQuiz) {
+			this.quizes = [myQuiz];
+			this.displayedQuiz;
 			//Add new quiz to applet
+			this.addQuiz = function(quiz) {
+				this.quizes.push(quiz);
+			}
 			//Display correct quiz
+			//...enumerate the quiz names and check for compatability then display the current one
 		}
+
+		// Our Quizes
+		var guyQuiz = new Quiz("The Guys", guysQuestions);
+		var cousinQuiz = new Quiz("John, Corinna & the Girls", cousinQuestions);
+		var edRichQuiz = new Quiz("Ed & Rich", edRichQuestinos);
+		var royaltyQuiz = new Quiz("The Royalty", royaltyQuestions);
+
+		// Quiz Applet
+		var quizApplet = new QuizApplet(guyQuiz);
+		quizApplet.addQuiz(cousinQuiz);
+		quizApplet.addQuiz(edRichQuiz);
+		quizApplet.addQuiz(royaltyQuiz);
+
+
+
