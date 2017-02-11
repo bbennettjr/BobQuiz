@@ -25,6 +25,21 @@
 		var edRichQuestinos = [];
 		var royaltyQuestions = [];
 
+		// User object
+		function User(firstName, lastName, email, password, topScores) {
+			this.firstName = firstName;
+			this.lastName = lastName;
+			this.email = email;
+			this.password = password;
+			this.topScores = [];
+			//Add a top score and sort
+			this.updateTopScores = function(score) {
+				this.topScores.push(score);
+				this.topScores.sort();
+				this.topScores.reverse();
+			}
+		}
+
 		// Quiz Object
 		function Quiz(name, questions) {
 			this.name = name;
