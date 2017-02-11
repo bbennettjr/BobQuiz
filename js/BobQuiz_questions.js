@@ -75,6 +75,10 @@
 			this.addQuiz = function(quiz) {
 				quizes.push(quiz);
 			}
+			//Get Quizes
+			this.getQuizes = function() {
+				return quizes;
+			}
 			//Display current quiz
 			this.getDisplayedQuiz = function() {
 				return focusQuiz;
