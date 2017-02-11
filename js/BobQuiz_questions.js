@@ -21,7 +21,7 @@
 		{prompt: "On a daily basis Bob most identifies with:", choices: ["Buddy the Elf", "Robin Hood", "Prince Humperdinck", "Cosmo Kramer", "Michael Scott"], correctAnswer: 2},
 		{prompt: "Bob's celeb crush:", choices: ["Bruce Willis", "Vin Diesel", "Jason Statham", "Howie Mandel", "Patrick Stewart"], correctAnswer: 1}];
 
-		var girlsQuestions = [];
+		var cousinQuestions = [];
 		var edRichQuestinos = [];
 		var royaltyQuestions = [];
 
@@ -29,14 +29,33 @@
 		function Quiz(name, questions) {
 			this.name = name;
 			this.questions = questions;
+			this.correctAnswers = this.setCorrectAnswers();
 			this.answers = new Array();
 			this.currentQuestion = 0;
-			// Update current question
-			//.....
-
+			//Set correct answers
+			var setCorrectAnswers = function(questions) {
+				var corAns = new Array();
+				var i = 0;
+				for (i; i < questions.length; i++) {
+					corAns[i] = questions[i].correctAnswer;
+				}
+				return corAns;
+			}
+			//Get current correct answer
+			this.getCurrentCorrectAnswer = function() {
+				return this.correctAnswers[this.currentQuestion];
+			}
+			//Update current question
+			this.updateCurrentQuestion = function() {
+				return this.currentQuestion++;
+			}
 			//Add new answer
+			this.addNewAnswer = function(ans) {
+				this.answers[this.answers.length] = ans;
+			}
 		}
 
+		// Quiz Applet Object
 		function quizApplet(quiz) {
 			this.quizes = [quiz];
 			//Add new quiz to applet
