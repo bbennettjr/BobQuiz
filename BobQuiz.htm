@@ -23,23 +23,25 @@
 			//updateUI();
 			function updateUI() {
 				//Get the quiz from the applet
+				var activeTab = quizApplet.getActiveTab();
 				var myQuiz = quizApplet.getActiveQuiz();
 				var question = myQuiz.getQuestion();
-				var currentQuestion = myQuiz.questionNumber;
+				var currentQuestion = myQuiz.getCurrentQuestion();
+				var numberAnswered = myQuiz.numberAnswered();
 				var choices = question.choices;
-				var myData;
+				//Index and populate the prompt and answer choices
 				$("#prompt").text(question.prompt);
-				//Index and populate the answer choices
 				for (var i =  NUMBER_OF_CHOICES - 1; i >= 0; i--) {
-					var myData = $("#choice_" + i + "_text");
-					myData.text(choices[i]);
+					$("#choice_" + i + "_text").text(choices[i]);
 				}
-				if (currentQuestion < answers.length) {
+				if (currentQuestion < numberAnswered) {
+					$(activeTab + " tr").removeClass("success");
+					
 					var choice = $("tr").siblings()[answers[currentQuestion]];
 					$(choice).addClass("success");
 					$("#next").removeClass("disabled");
 				}
-				if (currentQuestion >= answers.length) {$("#next").addClass("disabled");}
+				if (currentQuestion >= numberAnswered) {$("#next").addClass("disabled");}
 				$("#counter_text").text(currentQuestion + 1);
 				$(".table-responsive").animate({opacity:1.0}, SPEED);
 			}

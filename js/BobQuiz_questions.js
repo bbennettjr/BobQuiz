@@ -71,13 +71,24 @@
 			this.getCurrentQuestion = function() {
 				return questionNumber;
 			}
-			//Set current question
+			//Increase current question
 			this.incrQuestionNumber = function() {
 				questionNumber++;
+			}
+			//Decrease current question
+			this.decQuestionNumber = function() {
+				questionNumber--;
 			}
 			//Add new answer
 			this.addNewAnswer = function(ans) {
 				answers.push(ans);
+			}
+			//Get answer 
+			this.getAnswer = function() {
+				return answers[questionNumber];
+			}
+			this.numberAnswered = function() {
+				return answers.length;
 			}
 			//Calculate score
 			this.calcScore = function() {
@@ -113,8 +124,12 @@
 			this.getQuizes = function() {
 				return quizes;
 			}
+			//Get the active tab
+			this.getActiveTab = function() {
+				return activeTab;
+			}
 			this.setActiveTab = function(tab) {
-				this.activeTab = tab;
+				activeTab = tab;
 			}
 			//Display current quiz
 			this.getActiveQuiz = function() {
@@ -140,6 +155,6 @@
 		quizApplet.addQuiz(edRichQuiz);
 		quizApplet.addQuiz(royaltyQuiz);
 		quizApplet.setActiveQuiz(guyQuiz);
-
+		quizApplet.setActiveTab("#bob");
 
 
