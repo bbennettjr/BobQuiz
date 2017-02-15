@@ -85,7 +85,8 @@
 		// Quiz Applet Object
 		function QuizApplet() {
 			var quizes = [];
-			var focusQuiz;
+			var activeQuiz = null;
+			var activeTab = null;
 			//Add new quiz to applet
 			this.addQuiz = function(quiz) {
 				quizes.push(quiz);
@@ -94,13 +95,16 @@
 			this.getQuizes = function() {
 				return quizes;
 			}
+			this.setActiveTab = function(tab) {
+				this.activeTab = tab;
+			}
 			//Display current quiz
-			this.getDisplayedQuiz = function() {
-				return focusQuiz;
+			this.getActiveQuiz = function() {
+				return activeQuiz;
 			}
 			//Set current quiz
-			this.setDisplayedQuiz = function(quiz) {
-				focusQuiz = quiz;
+			this.setActiveQuiz = function(quiz) {
+				activeQuiz = quiz;
 			}
 			//...enumerate the quiz names and check for compatability then display the current one
 		}

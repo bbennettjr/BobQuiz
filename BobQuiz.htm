@@ -17,6 +17,7 @@
 		var NUMBER_OF_CHOICES = 5;
 		var SPEED = 150; //milliseconds
 		var emailtemp;
+		var activeTab = null;
 
 		$(document).ready(function() {
 			updateUI();
@@ -228,19 +229,19 @@
 			// Toggle Tooltip
 			$(function () {
 				$('[data-toggle="tooltip"]').tooltip()
-			})
+			});
 
-			// Append table and update Quiz shown
-			$("a[data-toggle='tab']").click(function() {
-				var ref = $(this).attr("href");
-				if ($(ref).children().length === 0) {
-					$(".table-responsive").clone().appendTo($(ref));
-					// $(ref).append($("#tableInsert"));
-					// $("#tableInsert").show();
-				} else {
-					return;
-				}
-			})
+			// Manually show the tabs
+			$(".nav-tabs a").click(function() {
+				$(this).tab('show');
+			});
+
+			// Dynamically add HTML to each tab when clicked, then remove event handler
+			$(".nav-tabs a").on("show.bs.tab", function(e) {
+				var table = $(".table-responsive");
+				$("#tabs").children().append(table);
+				$(".nav-tabs a").off("show.bs.tab");
+			});
 
 		});
 </script>
@@ -432,31 +433,23 @@
 	 	<!-- Tab content -->
 	 	<div id="tabs" class="tab-content">
 	 		<div id="bob" class="tab-pane fade in active">
-	 				 <!-- Table to be appened in the tab navigator -->
-				 	<div class="table-responsive">
-						<table class="table table-hover">
-							<thead>
-								<tr style="pointer-events: none;">
-									<h3 id="prompt" class="text-center"></h3>
-								</tr>
-							</thead>
-							<tbody id="choices">
-								<tr><td id="choice_0_text"></td></tr>
-								<tr><td id="choice_1_text"></td></tr>
-								<tr><td id="choice_2_text"></td></tr>
-								<tr><td id="choice_3_text"></td></tr>
-								<tr><td id="choice_4_text"></td></tr>
-							</tbody>
-						</table>
-					</div>
-					<ul class="pager">
-						<li id="previous" class="previous"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a></li>
-						<li id="next" class="next"><a href="#">Next <span class="glyphicon glyphicon-chevron-right"></span></a></li>
-					</ul>	 			
-					<div class="progress">
-						<div id="progressBar" class="progress-bar progress-bar-success" data-toggle="tooltip" title="Your progress through this quiz" role="progressbar" aria-valuenow="70"
-						aria-valuemin="0" aria-valuemax="22" style="width:50%"></div>
-					</div>
+	 				 <!-- Table to appened in the tab navigator -->
+	 				 <div class="table-responsive">
+	 				 	<table class="table table-hover">
+	 				 		<thead>
+	 				 			<tr style="pointer-events: none;">
+	 				 				<h3 id="prompt" class="text-center"></h3>
+	 				 			</tr>
+	 				 		</thead>
+	 				 		<tbody id="choices">
+	 				 			<tr><td id="choice_0_text"></td></tr>
+	 				 			<tr><td id="choice_1_text"></td></tr>
+	 				 			<tr><td id="choice_2_text"></td></tr>
+	 				 			<tr><td id="choice_3_text"></td></tr>
+	 				 			<tr><td id="choice_4_text"></td></tr>
+	 				 		</tbody>
+	 				 	</table>
+	 				 </div>
 	 		</div>
 	 		<div id="johnCorinna" class="tab-pane fade">
 	 		</div>
@@ -464,6 +457,14 @@
 	 		</div>
 	 		<div id="eliseDianeKristen" class="tab-pane fade">
 	 		</div>
+	 	</div>
+	 	<ul class="pager">
+	 		<li id="previous" class="previous"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a></li>
+	 		<li id="next" class="next"><a href="#">Next <span class="glyphicon glyphicon-chevron-right"></span></a></li>
+	 	</ul>	 			
+	 	<div class="progress">
+	 		<div id="progressBar" class="progress-bar progress-bar-success" data-toggle="tooltip" title="Your progress through this quiz" role="progressbar" aria-valuenow="70"
+	 		aria-valuemin="0" aria-valuemax="22" style="width:50%"></div>
 	 	</div>
 	 </div>
 
