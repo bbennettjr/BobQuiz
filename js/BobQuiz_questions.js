@@ -44,16 +44,16 @@
 		function Quiz(name, questions) {
 			this.name = name;
 			this.questions = questions;
-			this.correctAnswers = setCorrectAnswers();
+			this.correctAnswers = setCorrectAnswers(questions);
 			this.answers = [];
 			this.currentQuestion = 0;
 			this.score = 0;
 			//Set correct answers
-			function setCorrectAnswers(questions) {
+			function setCorrectAnswers(myQuestions) {
 				var corAns = new Array();
 				var i = 0;
-				for (i; i < questions.length - 1; i++) {
-					corAns.push(questions[i].correctAnswer);
+				for (i; i < myQuestions.length - 1; i++) {
+					corAns.push(myQuestions[i].correctAnswer);
 				}
 				return corAns;
 			}
