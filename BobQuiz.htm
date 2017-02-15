@@ -20,24 +20,28 @@
 		var activeTab = null;
 
 		$(document).ready(function() {
-			updateUI();
+			//updateUI();
 			function updateUI() {
-				var question = guysQuestions[currentQuestion];
+				//Get the quiz from the applet
+				var myQuiz = quizApplet.getActiveQuiz();
+				var question = myQuiz.getQuestion();
+				var currentQuestion = myQuiz.questionNumber;
 				var choices = question.choices;
 				var myData;
 				$("#prompt").text(question.prompt);
+				//Index and populate the answer choices
 				for (var i =  NUMBER_OF_CHOICES - 1; i >= 0; i--) {
 					var myData = $("#choice_" + i + "_text");
 					myData.text(choices[i]);
 				}
 				if (currentQuestion < answers.length) {
 					var choice = $("tr").siblings()[answers[currentQuestion]];
-					$(choice).addClass("active");
-					$("#next").removeClass("inactive");
+					$(choice).addClass("success");
+					$("#next").removeClass("disabled");
 				}
-				if (currentQuestion >= answers.length) {$("#next").addClass("inactive");}
+				if (currentQuestion >= answers.length) {$("#next").addClass("disabled");}
 				$("#counter_text").text(currentQuestion + 1);
-				$("#container").animate({opacity:1.0}, SPEED);
+				$(".table-responsive").animate({opacity:1.0}, SPEED);
 			}
 
 			// Log in to the website
@@ -64,6 +68,7 @@
 								$("#welcomeMsg").text("Welcome, " + name);
 								$("#navbarLoggedIn").fadeIn();
 								$("#quiz").fadeIn();
+								updateUI();
 							} else {
 								$("#logInAlert").addClass("alert-danger").text("Your password does not match! Please try again.").show();
 								return;
@@ -102,6 +107,7 @@
 						$("#welcomeMsg").text("Welcome, " + $("#firstName").val());
 						$("#navbarLoggedIn").fadeIn();
 						$("#quiz").fadeIn();
+						updateUI();
 					}
 				}
 			});
@@ -138,23 +144,23 @@
 			}
 
 			$("#next").click(function() {
-				var myAnswer = $("#choices").children().children("tr.active");
+				var myAnswer = $("#choices tr.success");
 				if (myAnswer.length == 0) {
 					alert("Select an answer or the puppy gets it!");
 					return;					
 				}
 				else {
 					//log answer and prep for next question
-					$("tr").removeClass("active");
+					$("tr").removeClass("success");
 					var myAnswer = myAnswer.attr("id");
 					myAnswer = parseInt(myAnswer);
-					if (currentQuestion < questions.length - 1) {
+					if (currentQuestion < guysQuestions.length - 1) {
 						answers[currentQuestion] = myAnswer; 
 						currentQuestion++;
 						//do quick animation of transition first
-						$("#container").animate({opacity:0.0}, SPEED, updateUI);
+						$(".table-responsive").animate({opacity:0.0}, SPEED, updateUI);
 					} else {
-						$("#container").animate({opacity:0.0}, SPEED, presentScore);
+						$(".table-responsive").animate({opacity:0.0}, SPEED, presentScore);
 					}
 				}
 			});
@@ -163,8 +169,8 @@
 				if (currentQuestion <= 0) {
 					return;
 				} else {
-					$("#container").animate({opacity:0},SPEED,updateUI);
-					$("tr").removeClass("active");
+					$(".table-responsive").animate({opacity:0},SPEED,updateUI);
+					$("tr").removeClass("success");
 					currentQuestion --;
 				}
 			});
@@ -172,17 +178,17 @@
 			$("tr").click(function() {
 				$(this).toggleClass("success");
 				$(this).siblings("tr.success").toggleClass("success");
-				if ($("#choices").children().children("tr.active").length == 0) {
-					$("#next").addClass("inactive");				
+				if ($("#choices tr.success").length == 0) {
+					$("#next").addClass("disabled");				
 				} else {
-					$("#next").removeClass("inactive");									
+					$("#next").removeClass("disabled");									
 				}
 			});
 
 			function presentScore() {
 				var final = document.getElementById("final");
 				var score = tallyScore();
-				var totalQuestions = questions.length;
+				var totalQuestions = guysQuestions.length;
 				var percentScore = Math.round(100 * score / totalQuestions);
 				if (percentScore > 80.0) {
 					$("#prompt").text("Wow! How do you know all of Bob's secrets? Are you God?");
@@ -206,8 +212,8 @@
 
 			function tallyScore() {
 				var tally = 0;
-				for (var i = 0; i < questions.length - 1; i++) {
-					if (answers[i] == questions[i].correctAnswer) {
+				for (var i = 0; i < guysQuestions.length - 1; i++) {
+					if (answers[i] == guysQuestions[i].correctAnswer) {
 						tally++;
 					}
 				}

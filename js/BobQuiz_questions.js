@@ -21,9 +21,12 @@
 		{prompt: "On a daily basis Bob most identifies with:", choices: ["Buddy the Elf", "Robin Hood", "Prince Humperdinck", "Cosmo Kramer", "Michael Scott"], correctAnswer: 2},
 		{prompt: "Bob's celeb crush:", choices: ["Bruce Willis", "Vin Diesel", "Jason Statham", "Howie Mandel", "Patrick Stewart"], correctAnswer: 1}];
 
-		var cousinQuestions = [];
-		var edRichQuestinos = [];
-		var royaltyQuestions = [];
+		var cousinQuestions = [{prompt: "Who is the girls' favorite cousin?", choices: ["Steve", "Brad", "Susan", "Elise", "Fred"], correctAnswer: 3}, 
+		{prompt: "What is their favorite book?", choices: ["1", "2", "3", "4", "5"], correctAnswer: 3}];
+		var edRichQuestinos = [{prompt: "Question 1", choices: ["Steve", "Brad", "Susan", "Elise", "Fred"], correctAnswer: 3},
+		{prompt: "Question 2", choices: ["1", "2", "3", "4", "5"], correctAnswer: 3}];
+		var royaltyQuestions = [{prompt: "Who is the princess?", choices: ["Kristen", "Diane", "Elise", "Brad", "Fred"], correctAnswer: 3},
+		{prompt: "Question 2?", choices: ["1", "2", "3", "4", "5"], correctAnswer: 3}];
 
 		// User object
 		function User(firstName, lastName, email, password, topScores) {
@@ -44,10 +47,10 @@
 		function Quiz(name, questions) {
 			this.name = name;
 			this.questions = questions;
-			this.correctAnswers = setCorrectAnswers(questions);
-			this.answers = [];
-			this.currentQuestion = 0;
-			this.score = 0;
+			var correctAnswers = setCorrectAnswers(questions);
+			var answers = [];
+			var questionNumber = 0;
+			var score = 0;
 			//Set correct answers
 			function setCorrectAnswers(myQuestions) {
 				var corAns = new Array();
@@ -57,28 +60,43 @@
 				}
 				return corAns;
 			}
+			this.getQuestion = function() {
+				return this.questions[questionNumber];
+			}
 			//Get current correct answer
 			this.getCorrectAnswer = function() {
-				return this.correctAnswers[this.currentQuestion];
+				return correctAnswers[questionNumber];
+			}
+			//Get current question number
+			this.getCurrentQuestion = function() {
+				return questionNumber;
 			}
 			//Set current question
-			this.setCurrentQuestion = function() {
-				this.currentQuestion++;
+			this.incrQuestionNumber = function() {
+				questionNumber++;
 			}
 			//Add new answer
 			this.addNewAnswer = function(ans) {
-				this.answers.push(ans);
+				answers.push(ans);
 			}
 			//Calculate score
 			this.calcScore = function() {
 				var myScore = 0;
 				var i = 0;
 				for (i; i < questions.length - 1; i++) {
-					if (this.answers[i] == this.correctAnswers[i]) {
+					if (answers[i] == correctAnswers[i]) {
 						myScore++;
 					}
 				}
-				return Math.round(100 * myScore / questions.length);
+				score = Math.round(100 * myScore / this.questions.length);
+			}
+			//Get score
+			this.getScore = function() {
+				return score;
+			}
+			//Progress
+			this.progress = function() {
+				return Math.round(100 * questionNumber / this.questions.length);
 			}
 		}
 
@@ -115,12 +133,13 @@
 		var edRichQuiz = new Quiz("Ed & Rich", edRichQuestinos);
 		var royaltyQuiz = new Quiz("The Royalty", royaltyQuestions);
 
-		// Quiz Applet
+		// Quiz Applet initialization
 		var quizApplet = new QuizApplet();
 		quizApplet.addQuiz(guyQuiz);
 		quizApplet.addQuiz(cousinQuiz);
 		quizApplet.addQuiz(edRichQuiz);
 		quizApplet.addQuiz(royaltyQuiz);
+		quizApplet.setActiveQuiz(guyQuiz);
 
 
 
