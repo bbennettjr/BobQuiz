@@ -73,15 +73,23 @@
 			}
 			//Increase current question
 			this.incrQuestionNumber = function() {
-				questionNumber++;
+				if (questionNumber < answers.length) {
+					questionNumber++;
+				}
 			}
 			//Decrease current question
 			this.decQuestionNumber = function() {
-				questionNumber--;
+				if (questionNumber > 0) {
+					questionNumber--;
+				}
 			}
 			//Add new answer
 			this.addNewAnswer = function(ans) {
-				answers.push(ans);
+				if (questionNumber === answers.length) {
+					answers.push(ans);
+				} else {
+					answers[questionNumber] = ans;
+				}
 			}
 			//Get answer 
 			this.getAnswer = function() {

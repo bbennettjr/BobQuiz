@@ -17,35 +17,8 @@
 		var NUMBER_OF_CHOICES = 5;
 		var SPEED = 150; //milliseconds
 		var emailtemp;
-		var activeTab = null;
 
 		$(document).ready(function() {
-			//updateUI();
-			function updateUI() {
-				//Get the quiz from the applet
-				var activeTab = quizApplet.getActiveTab();
-				var myQuiz = quizApplet.getActiveQuiz();
-				var question = myQuiz.getQuestion();
-				var currentQuestion = myQuiz.getCurrentQuestion();
-				var numberAnswered = myQuiz.numberAnswered();
-				var choices = question.choices;
-				//Index and populate the prompt and answer choices
-				$("#prompt").text(question.prompt);
-				for (var i =  NUMBER_OF_CHOICES - 1; i >= 0; i--) {
-					$("#choice_" + i + "_text").text(choices[i]);
-				}
-				if (currentQuestion < numberAnswered) {
-					$(activeTab + " tr").removeClass("success");
-					
-					var choice = $("tr").siblings()[answers[currentQuestion]];
-					$(choice).addClass("success");
-					$("#next").removeClass("disabled");
-				}
-				if (currentQuestion >= numberAnswered) {$("#next").addClass("disabled");}
-				$("#counter_text").text(currentQuestion + 1);
-				$(".table-responsive").animate({opacity:1.0}, SPEED);
-			}
-
 			// Log in to the website
 			$("#login_button").click(function() {
 				var email = $("#email").val();
@@ -143,6 +116,38 @@
 						$("#nav").show();
 					});
 				}
+			}
+
+			// Update the UI when appropriate
+			function updateUI() {
+				//Get the quiz from the applet
+				var activeTab = quizApplet.getActiveTab();
+				var myQuiz = quizApplet.getActiveQuiz();
+				var question = myQuiz.getQuestion();
+				var currentQuestion = myQuiz.getCurrentQuestion();
+				var numberAnswered = myQuiz.numberAnswered();
+				var choices = question.choices;
+				var myProgress = myQuiz.progress();
+				//Index and populate the prompt and answer choices
+				$("#prompt").text(question.prompt);
+				for (var i =  NUMBER_OF_CHOICES - 1; i >= 0; i--) {
+					$("#choice_" + i + "_text").text(choices[i]);
+				}
+				//When backpeddling, display the previously selected answers
+				if (currentQuestion < numberAnswered) {
+					$(activeTab + " #choices tr").eq(myQuiz.getAnswer()).addClass("success"); 
+					$("#next").removeClass("disabled");
+					if (currentQuestion === 0) {$("previous").addClass("disabled");}
+				}
+				//Disable Next button for forward progress
+				if (currentQuestion >= numberAnswered) {
+					$("#next").addClass("disabled");
+					if (currentQuestion >= 1) {$("previous").removeClass("disabled");}
+				}
+				//Update Progress bar display
+				$("#progressBar").attr("style", "min-width: 2em; width:" + myProgress + "%");
+				$("#progressBar span").text(myProgress + "%");
+				$(".table-responsive").animate({opacity:1.0}, SPEED);
 			}
 
 			$("#next").click(function() {
@@ -467,54 +472,14 @@
 	 		</div>
 	 	</div>
 	 	<ul class="pager">
-	 		<li id="previous" class="previous"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a></li>
+	 		<li id="previous" class="previous disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span> Previous</a></li>
 	 		<li id="next" class="next"><a href="#">Next <span class="glyphicon glyphicon-chevron-right"></span></a></li>
 	 	</ul>	 			
 	 	<div class="progress">
-	 		<div id="progressBar" class="progress-bar progress-bar-success" data-toggle="tooltip" title="Your progress through this quiz" role="progressbar" aria-valuenow="70"
-	 		aria-valuemin="0" aria-valuemax="22" style="width:50%"></div>
+	 		<div id="progressBar" class="progress-bar progress-bar-success" data-toggle="tooltip" title="Your progress through this quiz" role="progressbar" aria-valuenow="0"
+	 		aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width:2%;"><span>0%</span></div>
 	 	</div>
 	 </div>
-
-	<div id="quiz" style="display: none;">
-		<p>
-			<div id="container">
-				<div id="container_prompt">
-					<h4 id="prompt" class="text-center"></h4>
-				</div>
-				<div id="container_choices">
-					<table id="choices">
-						<tr id="0">
-							<td><h3 id="choice_0_text"></h3></td>
-						</tr>
-						<tr id="1">
-							<td><h3 id="choice_1_text"></h3></td>
-						</tr>
-						<tr id="2">
-							<td><h3 id="choice_2_text"></h3></td>
-						</tr>
-						<tr id="3">
-							<td><h3 id="choice_3_text"></h3></td>
-						</tr>
-						<tr id="4">
-							<td><h3 id="choice_4_text"></h3></td>
-						</tr>
-					</table>
-				</div>
-			</div>
-		</p>
-		<p>
-			<div id="nav" style="display: none;">
-				<div id="back"><p>Back</p></div>
-				<div id="next"><p>Next</p></div>
-			</div>
-		</p>
-		<p>
-			<div id="counter"><p><strong id="counter_text"></strong> / 22</p></div>
-		</p>
-		<div id="final" style="display: none;"><h4 id="finalDisplay"></h4></p></div>
-		<div id="reset" style="display: none;"><p>Reset</p></div>
-	</div>
 
 	<!-- Bob Quotes -->
 	<div class="container">
