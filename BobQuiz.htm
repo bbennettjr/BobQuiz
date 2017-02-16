@@ -132,9 +132,9 @@
 				var choices = question.choices;
 				var myProgress = myQuiz.progress();
 				//Index and populate the prompt and answer choices
-				$("#prompt").text(question.prompt);
+				$(activeTab + " #prompt").text(question.prompt);
 				for (var i =  NUMBER_OF_CHOICES - 1; i >= 0; i--) {
-					$("#choice_" + i + "_text").text(choices[i]);
+					$(activeTab + " #choice_" + i + "_text").text(choices[i]);
 				}
 				//When backpeddling, display the previously selected answers
 				if (currentQuestion < numberAnswered) {
@@ -155,13 +155,13 @@
 
 			// Next button to progress through the quiz
 			$("#next").click(function() {
-				var myAnswer = $("#choices tr.success");
-				if (myAnswer.length == 0) {
+				var selected = $(activeTab + " #choices tr.success");
+				if (selected.length == 0) {
 					return;					
 				}
 				else {
 					//log answer and prep for next question
-					var myAnswer = myAnswer.attr("id");
+					var myAnswer = selected.attr("id");
 					myAnswer = parseInt(myAnswer);
 					$(activeTab + " #choices tr").removeClass("success");
 					//Progress < 100 means continue the quiz, else present the final score
@@ -463,11 +463,11 @@
 	 				 			</tr>
 	 				 		</thead>
 	 				 		<tbody id="choices">
-	 				 			<tr><td id="choice_0_text"></td></tr>
-	 				 			<tr><td id="choice_1_text"></td></tr>
-	 				 			<tr><td id="choice_2_text"></td></tr>
-	 				 			<tr><td id="choice_3_text"></td></tr>
-	 				 			<tr><td id="choice_4_text"></td></tr>
+	 				 			<tr id="0"><td id="choice_0_text"></td></tr>
+	 				 			<tr id="1"><td id="choice_1_text"></td></tr>
+	 				 			<tr id="2"><td id="choice_2_text"></td></tr>
+	 				 			<tr id="3"><td id="choice_3_text"></td></tr>
+	 				 			<tr id="4"><td id="choice_4_text"></td></tr>
 	 				 		</tbody>
 	 				 	</table>
 	 				 </div>

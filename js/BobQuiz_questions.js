@@ -91,9 +91,9 @@
 			//Add new answer
 			this.setAnswer = function(ans) {
 				if (questionNumber === answers.length) {
-					answers.push(ans);
+					answers.push(parseInt(ans));
 				} else {
-					answers[questionNumber] = ans;
+					answers[questionNumber] = parseInt(ans);
 				}
 			}
 			//Get answer 
