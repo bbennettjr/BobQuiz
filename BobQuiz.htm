@@ -140,12 +140,12 @@
 				if (currentQuestion < numberAnswered) {
 					$(activeTab + " #choices tr").eq(myQuiz.getAnswer()).addClass("success"); 
 					$("#next").removeClass("disabled");
-					if (currentQuestion === 0) {$("previous").addClass("disabled");}
+					if (currentQuestion === 0) {$("#previous").addClass("disabled");}
 				}
 				//Disable Next button for forward progress
 				if (currentQuestion >= numberAnswered) {
 					$("#next").addClass("disabled");
-					if (currentQuestion >= 1) {$("previous").removeClass("disabled");}
+					if (currentQuestion >= 1) {$("#previous").removeClass("disabled");}
 				}
 				//Update Progress bar display
 				$("#progressBar").attr("style", "min-width: 2em; width:" + myProgress + "%");
@@ -187,10 +187,11 @@
 				}
 			});
 
-			$("tr").click(function() {
+			// Toggle selection of an answer, specific to the presented quiz
+			$(activeTab + " #choices tr").click(function() {
 				$(this).toggleClass("success");
 				$(this).siblings("tr.success").toggleClass("success");
-				if ($("#choices tr.success").length == 0) {
+				if ($(activeTab + " #choices tr.success").length == 0) {
 					$("#next").addClass("disabled");				
 				} else {
 					$("#next").removeClass("disabled");									
@@ -244,14 +245,11 @@
 				answers = new Array();
 			});
 
-			// Toggle Tooltip
-			$(function () {
-				$('[data-toggle="tooltip"]').tooltip()
-			});
-
-			// Manually show the tabs
+			// Manually show the tabs and set next activeTab and activeQuiz
 			$(".nav-tabs a").click(function() {
+				quizApplet.setActiveTab($(this).attr("href"));
 				$(this).tab('show');
+				updateUI();
 			});
 
 			// Dynamically add HTML to each tab when clicked, then remove event handler
@@ -259,6 +257,11 @@
 				var table = $(".table-responsive");
 				$("#tabs").children().append(table);
 				$(".nav-tabs a").off("show.bs.tab");
+			});
+
+			// Toggle Tooltip
+			$(function () {
+				$('[data-toggle="tooltip"]').tooltip()
 			});
 
 		});

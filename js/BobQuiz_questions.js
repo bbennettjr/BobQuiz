@@ -44,13 +44,18 @@
 		}
 
 		// Quiz Object
-		function Quiz(name, questions) {
+		function Quiz(name, ref, questions) {
 			this.name = name;
 			this.questions = questions;
+			var ref = ref;
 			var correctAnswers = setCorrectAnswers(questions);
 			var answers = [];
 			var questionNumber = 0;
 			var score = 0;
+			//get ref
+			this.getRef = function() {
+				return ref;
+			}
 			//Set correct answers
 			function setCorrectAnswers(myQuestions) {
 				var corAns = new Array();
@@ -137,24 +142,29 @@
 				return activeTab;
 			}
 			this.setActiveTab = function(tab) {
-				activeTab = tab;
+				quizes.forEach(function(quiz) {
+					if (quiz.getRef() === tab) {
+						activeTab = tab;
+						setActiveQuiz(quiz);
+					}
+				});
 			}
 			//Display current quiz
 			this.getActiveQuiz = function() {
 				return activeQuiz;
 			}
 			//Set current quiz
-			this.setActiveQuiz = function(quiz) {
+			var setActiveQuiz = function(quiz) {
 				activeQuiz = quiz;
 			}
 			//...enumerate the quiz names and check for compatability then display the current one
 		}
 
 		// Our Quizes
-		var guyQuiz = new Quiz("Bobbo & the Guys", guysQuestions);
-		var cousinQuiz = new Quiz("John, Corinna & the Girls", cousinQuestions);
-		var edRichQuiz = new Quiz("Ed & Rich", edRichQuestinos);
-		var royaltyQuiz = new Quiz("The Royalty", royaltyQuestions);
+		var guyQuiz = new Quiz("Bobbo & the Guys", "#bob", guysQuestions);
+		var cousinQuiz = new Quiz("John, Corinna & the Girls", "#johnCorinna", cousinQuestions);
+		var edRichQuiz = new Quiz("Ed & Rich", "#edRich", edRichQuestinos);
+		var royaltyQuiz = new Quiz("The Royalty", "#eliseDianeKristen", royaltyQuestions);
 
 		// Quiz Applet initialization
 		var quizApplet = new QuizApplet();
@@ -162,7 +172,6 @@
 		quizApplet.addQuiz(cousinQuiz);
 		quizApplet.addQuiz(edRichQuiz);
 		quizApplet.addQuiz(royaltyQuiz);
-		quizApplet.setActiveQuiz(guyQuiz);
 		quizApplet.setActiveTab("#bob");
 
 
