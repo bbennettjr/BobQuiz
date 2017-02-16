@@ -12,11 +12,14 @@
 	<script type="text/javascript" src="./js/CookieFunctions.js"></script>
 	<script type="text/javascript" src="./js/BobQuiz_questions.js"></script>
 	<script type="text/javascript">
+		// GLOBAL Variables
 		var answers = new Array(); //questions array defined in BobQuiz_questions.js
 		var currentQuestion = 0;
 		var NUMBER_OF_CHOICES = 5;
 		var SPEED = 150; //milliseconds
 		var emailtemp;
+		var activeTab = quizApplet.getActiveTab();
+		var myQuiz = quizApplet.getActiveQuiz();
 
 		$(document).ready(function() {
 			// Log in to the website
@@ -121,8 +124,8 @@
 			// Update the UI when appropriate
 			function updateUI() {
 				//Get the quiz from the applet
-				var activeTab = quizApplet.getActiveTab();
-				var myQuiz = quizApplet.getActiveQuiz();
+				activeTab = quizApplet.getActiveTab();
+				myQuiz = quizApplet.getActiveQuiz();
 				var question = myQuiz.getQuestion();
 				var currentQuestion = myQuiz.getCurrentQuestion();
 				var numberAnswered = myQuiz.numberAnswered();
@@ -147,38 +150,40 @@
 				//Update Progress bar display
 				$("#progressBar").attr("style", "min-width: 2em; width:" + myProgress + "%");
 				$("#progressBar span").text(myProgress + "%");
-				$(".table-responsive").animate({opacity:1.0}, SPEED);
+				$(activeTab + " .table-responsive").animate({opacity:1.0}, SPEED);
 			}
 
+			// Next button to progress through the quiz
 			$("#next").click(function() {
 				var myAnswer = $("#choices tr.success");
 				if (myAnswer.length == 0) {
-					alert("Select an answer or the puppy gets it!");
 					return;					
 				}
 				else {
 					//log answer and prep for next question
-					$("tr").removeClass("success");
 					var myAnswer = myAnswer.attr("id");
 					myAnswer = parseInt(myAnswer);
-					if (currentQuestion < guysQuestions.length - 1) {
-						answers[currentQuestion] = myAnswer; 
-						currentQuestion++;
+					$(activeTab + " #choices tr").removeClass("success");
+					//Progress < 100 means continue the quiz, else present the final score
+					if (myQuiz.progress() < 100) {
+						myQuiz.setAnswer(myAnswer); 
+						myQuiz.incrQuestionNumber();
 						//do quick animation of transition first
-						$(".table-responsive").animate({opacity:0.0}, SPEED, updateUI);
+						$(activeTab + " .table-responsive").animate({opacity:0.0}, SPEED, updateUI);
 					} else {
-						$(".table-responsive").animate({opacity:0.0}, SPEED, presentScore);
+						$(activeTab + " .table-responsive").animate({opacity:0.0}, SPEED, presentScore);
 					}
 				}
 			});
 
+			// Previous button to backtrack through the quiz
 			$("#previous").click(function() {
-				if (currentQuestion <= 0) {
+				if (myQuiz.progress() <= 0) {
 					return;
 				} else {
-					$(".table-responsive").animate({opacity:0},SPEED,updateUI);
-					$("tr").removeClass("success");
-					currentQuestion --;
+					$(activeTab + " .table-responsive").animate({opacity:0}, SPEED, updateUI);
+					$(activeTab + " #choices tr").removeClass("success");
+					myQuiz.decQuestionNumber();
 				}
 			});
 

@@ -84,7 +84,7 @@
 				}
 			}
 			//Add new answer
-			this.addNewAnswer = function(ans) {
+			this.setAnswer = function(ans) {
 				if (questionNumber === answers.length) {
 					answers.push(ans);
 				} else {
