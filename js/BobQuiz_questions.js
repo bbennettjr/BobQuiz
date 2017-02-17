@@ -189,10 +189,10 @@
 		quotesObj.addQuote("Ski Bob", "Brad's First Ski Trip", "This is for not being as much of a pussy as we thought you were. *throws Brad new mittens*");
 		quotesObj.addQuote("Diane", "Her Life Experiences", "That was Amazing!");
 		quotesObj.addQuote("Racing Bob", "Steelman Triathalon", "Her last boyfriend was faster.");
-		quotesObj.addQuote("Celebratory Bob", "Christmas", "Don't hug me.");
+		quotesObj.addQuote("Celebratory Bob", "Christmas", "Don't hug me. I'm not a hugger.");
 		quotesObj.addQuote("Bob", "Ski Lift Proposal", "Which daughter?...Fine....You owe me a Llama.");
 		quotesObj.addQuote("Weeknight Bob", "Hoping The Kids Leave", "Why does this guy keep hugging me?");
-		quotesObj.addQuote("Mikayla", "Her Secret Life Plan", "*...Quietly smiling...*");
+		quotesObj.addQuote("Mikayla", "Taking the World by Storm", "*...quietly smiling...*");
 		quotesObj.addQuote("Kaitlyn", "Farm Politics", "I fell off Bernie because his belly is too fat.");
 		quotesObj.addQuote("Diane", "Dinnertime", "Oh my god this is so lite, fluffy and delicious!");
 		quotesObj.addQuote("Diane", "Diane's Outlook on Life", "It's a BEAUTIFUL day!");
