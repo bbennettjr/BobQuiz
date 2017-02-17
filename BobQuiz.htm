@@ -22,6 +22,14 @@
 		var myQuiz = quizApplet.getActiveQuiz();
 
 		$(document).ready(function() {
+			// Set timer for quote wheel
+			function timer() {
+				var myQuote = quotesObj.pullQuote();
+				$("blockquote p").text(myQuote.quote);
+				$("blockquote footer").html(myQuote.name + " in <cite id='cite' title='Source Title'>" + myQuote.source + "</cite>");
+			}
+			setInterval(timer, 30000);
+
 			// Log in to the website
 			$("#login_button").click(function() {
 				var email = $("#email").val();
@@ -293,7 +301,7 @@
 	<div id="home" class="container">
 		<div class="jumbotron">
 			<h1>The Campbell Clan Quiz</h1>
-			<p><span class="label label-primary">Discover</span> the real Bob Campbell and why Brad should be <span class="label label-danger">scared.</span></p>
+			<p><span class="label label-primary">Discover</span> what it means to be a Campbell and why Brad should be <span class="label label-danger">scared.</span></p>
 		</div>
 	<!-- Home page buttons -->
 		<div class="row">

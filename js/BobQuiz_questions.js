@@ -43,6 +43,28 @@
 			}
 		}
 
+		// Quotes
+		function Quotes() {
+			var quotes = [];
+			//Add a new quote
+			this.addQuote = function(name, source, quote) {
+				var newQuote = {
+					name: name,
+					source: source,
+					quote: quote,
+					add: function() {
+						quotes.push(this);
+					}
+				};
+				newQuote.add();
+			}
+			//Get random quote
+			this.pullQuote = function() {
+				var index = Math.floor((Math.random() * quotes.length));
+				return quotes[index];
+			}
+		}
+
 		// Quiz Object
 		function Quiz(name, ref, questions) {
 			this.name = name;
@@ -141,6 +163,7 @@
 			this.getActiveTab = function() {
 				return activeTab;
 			}
+			//Set active tab and quiz if pass arg is found in stored quizes
 			this.setActiveTab = function(tab) {
 				quizes.forEach(function(quiz) {
 					if (quiz.getRef() === tab) {
@@ -159,6 +182,19 @@
 			}
 			//...enumerate the quiz names and check for compatability then display the current one
 		}
+
+		// Quotes
+		var quotesObj = new Quotes();
+		quotesObj.addQuote("Test", "my mind", "oh yes lets try");
+		quotesObj.addQuote("1", "my mind", "oh yes lets try");
+		quotesObj.addQuote("2", "my mind", "o6ts try");
+		quotesObj.addQuote("3", "my mind", "oh yes lets try");
+		quotesObj.addQuote("4", "my mind", "oh yes lets try");
+		quotesObj.addQuote("7", "my mind", "36s lets try");
+		quotesObj.addQuote("5", "my mind", "oh yes lets try");
+		quotesObj.addQuote("6", "my mind", "oh yes lets try");
+		quotesObj.addQuote("4", "my mind", "oh y6 lets try");
+		quotesObj.addQuote("8", "my mind", "oh yes l4try");
 
 		// Our Quizes
 		var guyQuiz = new Quiz("Bobbo & the Guys", "#bob", guysQuestions);
