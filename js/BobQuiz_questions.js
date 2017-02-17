@@ -185,16 +185,17 @@
 
 		// Quotes
 		var quotesObj = new Quotes();
-		quotesObj.addQuote("Test", "my mind", "oh yes lets try");
-		quotesObj.addQuote("1", "my mind", "oh yes lets try");
-		quotesObj.addQuote("2", "my mind", "o6ts try");
-		quotesObj.addQuote("3", "my mind", "oh yes lets try");
-		quotesObj.addQuote("4", "my mind", "oh yes lets try");
-		quotesObj.addQuote("7", "my mind", "36s lets try");
-		quotesObj.addQuote("5", "my mind", "oh yes lets try");
-		quotesObj.addQuote("6", "my mind", "oh yes lets try");
-		quotesObj.addQuote("4", "my mind", "oh y6 lets try");
-		quotesObj.addQuote("8", "my mind", "oh yes l4try");
+		quotesObj.addQuote("Annoyed Bob", "The Kids Came Home", "Mickey Bite!");
+		quotesObj.addQuote("Ski Bob", "Brad's First Ski Trip", "This is for not being as much of a pussy as we thought you were. *throws Brad new mittens*");
+		quotesObj.addQuote("Diane", "Her Life Experiences", "That was Amazing!");
+		quotesObj.addQuote("Racing Bob", "Steelman Triathalon", "Her last boyfriend was faster.");
+		quotesObj.addQuote("Celebratory Bob", "Christmas", "Don't hug me.");
+		quotesObj.addQuote("Bob", "Ski Lift Proposal", "Which daughter?...Fine....You owe me a Llama.");
+		quotesObj.addQuote("Weeknight Bob", "Hoping The Kids Leave", "Why does this guy keep hugging me?");
+		quotesObj.addQuote("Mikayla", "Her Secret Life Plan", "*...Quietly smiling...*");
+		quotesObj.addQuote("Kaitlyn", "Farm Politics", "I fell off Bernie because his belly is too fat.");
+		quotesObj.addQuote("Diane", "Dinnertime", "Oh my god this is so lite, fluffy and delicious!");
+		quotesObj.addQuote("Diane", "Her Outlook on Life", "It's a BEAUTIFUL day!");
 
 		// Our Quizes
 		var guyQuiz = new Quiz("Bobbo & the Guys", "#bob", guysQuestions);
