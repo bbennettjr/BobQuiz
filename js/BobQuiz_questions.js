@@ -195,7 +195,8 @@
 		quotesObj.addQuote("Mikayla", "Her Secret Life Plan", "*...Quietly smiling...*");
 		quotesObj.addQuote("Kaitlyn", "Farm Politics", "I fell off Bernie because his belly is too fat.");
 		quotesObj.addQuote("Diane", "Dinnertime", "Oh my god this is so lite, fluffy and delicious!");
-		quotesObj.addQuote("Diane", "Her Outlook on Life", "It's a BEAUTIFUL day!");
+		quotesObj.addQuote("Diane", "Diane's Outlook on Life", "It's a BEAUTIFUL day!");
+		quotesObj.addQuote("Mickey", "No Touching", "Woof Woof Woof!");
 
 		// Our Quizes
 		var guyQuiz = new Quiz("Bobbo & the Guys", "#bob", guysQuestions);

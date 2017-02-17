@@ -148,7 +148,9 @@
 				if (currentQuestion < numberAnswered) {
 					$(activeTab + " #choices tr").eq(myQuiz.getAnswer()).addClass("success"); 
 					$("#next").removeClass("disabled");
-					if (currentQuestion === 0) {$("#previous").addClass("disabled");}
+					if (currentQuestion === 0) {
+						$("#previous").addClass("disabled");
+					} else {$("#previous").removeClass("disabled");}
 				}
 				//Disable Next button for forward progress
 				if (currentQuestion >= numberAnswered) {
@@ -510,7 +512,7 @@
 		<div class="container-fluid">
 			<p class="text-center navbar-text">Copyright &copy; The Sticky Mickey Corporation, a subsidiary of Nasty-Wags Intl., all rights reserved.</p>
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#" data-toggle="tooltip" data-placement="auto" title="He's gonna need it.">Donate</a></li>
+				<li><a href="#" data-toggle="tooltip" data-placement="auto" title="Brad's gonna need it.">Donate</a></li>
 				<li><a href="#">Contact</a></li>
 			</ul>
 		</div>
