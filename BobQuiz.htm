@@ -194,7 +194,7 @@
 
 			// Previous button to backtrack through the quiz
 			$("#previous").click(function() {
-				if (myQuiz.progress() <= 0) {
+				if (myQuiz.getCurrentQuestion() <= 0) {
 					return;
 				} else {
 					$(activeTab + " .table-responsive").animate({opacity:0}, SPEED, updateUI);
@@ -260,6 +260,7 @@
 			// Dynamically add HTML to each tab when clicked, then remove event handler
 			$(".nav-tabs a").on("show.bs.tab", function(e) {
 				var table = $(".table-responsive");
+				$(".table-responsive tr.success").toggleClass("success");
 				$("#tabs").children().append(table);
 				$(".nav-tabs a").off("show.bs.tab");
 			});
