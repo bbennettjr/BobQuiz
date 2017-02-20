@@ -23,7 +23,7 @@
 
 		var cousinQuestions = [{prompt: "Who is the girls' favorite cousin?", choices: ["Steve", "Brad", "Susan", "Elise", "Fred"], correctAnswer: 3}, 
 		{prompt: "What is their favorite book?", choices: ["1", "2", "3", "4", "5"], correctAnswer: 3}];
-		var edRichQuestinos = [{prompt: "Question 1", choices: ["Steve", "Brad", "Susan", "Elise", "Fred"], correctAnswer: 3},
+		var edRichQuestinos = [{prompt: "Who is the MVP of Campbell & Co. Jewelers?", choices: ["Brad", "Ed", "Cody", "Elise", "Rich"], correctAnswer: 2},
 		{prompt: "Question 2", choices: ["1", "2", "3", "4", "5"], correctAnswer: 3}];
 		var royaltyQuestions = [{prompt: "Who is the princess?", choices: ["Kristen", "Diane", "Elise", "Brad", "Fred"], correctAnswer: 3},
 		{prompt: "Question 2?", choices: ["1", "2", "3", "4", "5"], correctAnswer: 3}];
@@ -191,18 +191,26 @@
 		// Quotes
 		var quotesObj = new Quotes();
 		quotesObj.addQuote("Annoyed Bob", "The Kids Came Home", "Mickey Bite!");
-		quotesObj.addQuote("Ski Bob", "Brad's First Ski Trip", "This is for not being as much of a pussy as we thought you were. *throws Brad new mittens*");
+		quotesObj.addQuote("Annoyed Bob", "The Kids Came Home", "Sick 'em Mickey!");
+		quotesObj.addQuote("Annoyed Bob", "The Kids Came Home", "Go for the groin Mickey!");
+		quotesObj.addQuote("Annoyed Bob", "The Kids Came Home", "No mercy Mickey!");
+		quotesObj.addQuote("Ski Bob", "Brad's First Ski Trip", "Guess you're not as much of a pussy as we thought you were...*throws Brad new mittens*...*refuses hug*");
 		quotesObj.addQuote("Diane", "Her Life Experiences", "That was Amazing!");
-		quotesObj.addQuote("Racing Bob", "Steelman Triathalon", "Her last boyfriend was faster.");
-		quotesObj.addQuote("Celebratory Bob", "Christmas", "Don't hug me. I'm not a hugger.");
+		quotesObj.addQuote("Racing Bob", "Steelman Triathalon", "You know her last boyfriend was faster.");
+		quotesObj.addQuote("Celebratory Bob", "Christmas", "Don't hug me. I'm not a hugger...");
 		quotesObj.addQuote("Bob", "Ski Lift Proposal", "Which daughter?...Fine....You owe me a Llama.");
 		quotesObj.addQuote("Weeknight Bob", "Hoping The Kids Leave", "Why does this guy keep hugging me?");
-		quotesObj.addQuote("Mikayla", "Taking the World by Storm", "*...quietly smiling...*");
-		quotesObj.addQuote("Kaitlyn", "Farm Politics", "I fell off Bernie because his belly is too fat.");
+		quotesObj.addQuote("Mikayla", "Taking the World by Storm", "...*quietly smiling*...");
+		quotesObj.addQuote("Mikayla", "Lacrosse Picture", "I look like I'm being strangled");
+		quotesObj.addQuote("Kaitlyn", "Farm Politics", "I fell off Bernie.");
 		quotesObj.addQuote("Kaitlyn", "Stratton Antics", "That's lit.");
-		quotesObj.addQuote("Diane", "Dinnertime", "Oh my god this is so lite, fluffy and delicious!");
+		quotesObj.addQuote("Diane", "Dinnertime", "Oh my god this is so lite and fluffy; it's delicious!");
 		quotesObj.addQuote("Diane", "Diane's Outlook on Life", "It's a BEAUTIFUL day!");
-		quotesObj.addQuote("Mickey", "No Touching", "Woof Woof Woof!");
+		quotesObj.addQuote("Diane", "Life", "What an amazing day!");
+		quotesObj.addQuote("Diane", "On Living", "Could life get any better?");
+		quotesObj.addQuote("Mickey", "No Touching", "Woof Wooof Woof!");
+		quotesObj.addQuote("Mickey", "Life is Good", "*Growing fluffy pantaloons*");
+		quotesObj.addQuote("Entire Family", "This is How We Talk", "*text*...*gif*..*emoji*...*gif* *gif* *gif*...*emoji*");
 
 		// Our Quizes
 		var guyQuiz = new Quiz("Bobbo & the Guys", "#bob", guysQuestions);
