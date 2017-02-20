@@ -89,7 +89,7 @@
 				return corAns;
 			}
 			this.getQuestion = function() {
-				return this.questions[questionNumber];
+				if (this.questions[questionNumber]) {return this.questions[questionNumber];}
 			}
 			//Get current correct answer
 			this.getCorrectAnswer = function() {
@@ -126,20 +126,16 @@
 			this.presentScore = function() {
 				this.toPresent = true;
 			}
-			//Calculate score
-			calcScore = function() {
+			//Get score
+			this.getScore = function() {
 				var myScore = 0;
 				var i = 0;
-				for (i; i < questions.length - 1; i++) {
+				for (i; i < this.questions.length - 1; i++) {
 					if (answers[i] == correctAnswers[i]) {
 						myScore++;
 					}
 				}
 				score = Math.round(100 * myScore / (this.questions.length - 1));
-			}
-			//Get score
-			this.getScore = function() {
-				calcScore();
 				return score;
 			}
 			//Progress

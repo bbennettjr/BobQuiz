@@ -134,7 +134,6 @@
 				//Get the quiz from the applet
 				activeTab = quizApplet.getActiveTab();
 				myQuiz = quizApplet.getActiveQuiz();
-			
 				//Presenting score 
 				if (myQuiz.toPresent) {
 					presentScore();
@@ -143,7 +142,7 @@
 					var currentQuestion = myQuiz.getCurrentQuestion();
 					var numberAnswered = myQuiz.numberAnswered();
 					var choices = question.choices;
-
+					var myProgress = myQuiz.progress();	
 					//Ensure nav buttons are visibile
 					$("#previous").animate({opacity:1.0}, SPEED);
 					$("#next").animate({opacity:1.0}, SPEED);
@@ -165,6 +164,14 @@
 						$("#next").addClass("disabled");
 						if (currentQuestion >= 1) {$("#previous").removeClass("disabled");}
 					}
+					$("#progressBar").attr("style", "min-width: 2em; width:" + myProgress + "%");
+					$("#progressBar span").text(myProgress + "%");	
+					//Update Next button if quiz is about to end
+					if (myProgress == 100) {
+						$("#next").html("<a href='#'>Submit <span class='glyphicon glyphicon-ok'></span></a>");
+					} else {
+						$("#next").html("<a href='#'>Next <span class='glyphicon glyphicon-chevron-right'></span></a>");
+					}
 					$(activeTab + " .table-responsive").animate({opacity:1.0}, SPEED);				}
 				}
 
@@ -175,16 +182,11 @@
 					return;					
 				}
 				else {
-					//log answer and prep for next question
-					// var myAnswer = selected.attr("id");
-					// myAnswer = parseInt(myAnswer);
 					$(activeTab + " #choices tr").removeClass("success");
 					myQuiz.incrQuestionNumber();
-					//Progress < 100 means continue the quiz, else present the final score
+					//Progress == 100 means present the final score
 					if (myQuiz.progress() == 100) {
 						myQuiz.presentScore();
-						// myQuiz.setAnswer(myAnswer); 
-						//do quick animation of transition first
 					} 
 					$(activeTab + " .table-responsive").animate({opacity:0.0}, SPEED, updateUI);
 				}
@@ -203,8 +205,6 @@
 
 			// Toggle selection of an answer, specific to the presented quiz
 			$(activeTab + " #choices tr").click(function() {
-				//Update Progress bar display
-				var myProgress;	
 				//Select/toggle answer						
 				$(this).toggleClass("success");
 				$(this).siblings("tr.success").toggleClass("success");
@@ -216,36 +216,28 @@
 					$("#next").removeClass("disabled");	
 					myQuiz.setAnswer(parseInt($(this).attr("id"))); 
 				}
-				myProgress = myQuiz.progress();	
-				$("#progressBar").attr("style", "min-width: 2em; width:" + myProgress + "%");
-				$("#progressBar span").text(myProgress + "%");	
-				//Update Next button if quiz is about to end
-				if (myProgress == 100) {
-					$("#next").html("<a href='#'>Submit <span class='glyphicon glyphicon-ok'></span></a>");
-				} else {
-					$("#next").html("<a href='#'>Next <span class='glyphicon glyphicon-chevron-right'></span></a>");
-				}
+				updateUI();
 			});
 
 			// Present the score after submit
 			function presentScore() {
 				$("#previous").animate({opacity:0.0}, SPEED);
 				$("#next").animate({opacity:0.0}, SPEED);
-				if ($(activeTab + " #presentScore").length == 0) {
+				if ($(activeTab + " .presentScore").length == 0) {
 					$(activeTab + " .table-responsive").hide();
-					$(activeTab).append($("#presentScore"));
-					$("#presentScore").show();
+					$(activeTab).append($(".presentScore"));
+					$(activeTab + " .presentScore").show();
 				}
 				var score = myQuiz.getScore();
-				$("#presentScore .lead").html("Your final score is <span class='label label-success'>" + score + "%</span>!<br/>" + "You correctly answered " + score + " / " + myQuiz.numberAnswered() + ".");
+				$(activeTab + " .lead").html("Your final score is <span class='label label-primary'>" + score + "%.</span>");
 				if (score > 30.0) {
-					$("#presentScore .small").text("Wow! How do you know all secrets? Are you God?");
+					$(activeTab + " .small").text("Wow! How do you know all secrets? Are you God?");
 				} else if (score > 15.0) {
-					$("#presentScore .small").text("Definitely cheating off of Hector.");
+					$(activeTab + " .small").text("Definitely cheating off of Hector.");
 				} else if (score > 5.0) {
-					$("#presentScore .small").text("Mickey still nose more than you.");
+					$(activeTab + " .small").text("Mickey still nose more than you.");
 				} else {
-					$("#presentScore .small").text("Who is this? Someone call security...Odie!");
+					$(activeTab + " .small").text("Who is this? Someone call security...Odie!");
 				}
 			}
 
@@ -253,8 +245,9 @@
 			$("#reset").click(function() {
 				//First reset the quiz
 				myQuiz.reset();
-				$(activeTab + " #presentScore").hide();
-				$(activeTab + " .table-responsive").show().animate({opacity:1.0}, SPEED);
+				$(activeTab + " .presentScore").hide();
+				$(activeTab + " .table-responsive").show().fadeIn();
+				updateUI();
 			});
 
 			// Manually show the tabs and set next activeTab and activeQuiz
@@ -455,8 +448,8 @@
 	 <!-- Tab and Quiz Arena -->
 	 <div id="quiz" class="container" style="display: none;">
 	 <!-- Header -->
-	 <div class="page-header">
-	 	<h1>Campbell Quiz <small>Test your knowledge of this magnetic family</small></h1>
+	 <div class="page-header text-center">
+	 	<h1>Campbell Quiz <small>Test your knowledge of this <span class="label label-warning">magnetic</span> family</small></h1>
 	 </div>
 	 	<!-- Tab navigator -->
 	 	<p>
@@ -505,7 +498,7 @@
 	 	</div>
 	 </div>
 	 <!-- Present Score -->
-	 <div id="presentScore" class="container text-center" style="display: none;">
+	 <div class="presentScore container text-center" style="display: none;">
 	 	<h3>Congratulations!</h3>
 	 	<p class="lead"></p>
 	 	<p class="small"></p>
