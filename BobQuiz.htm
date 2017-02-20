@@ -224,10 +224,10 @@
 				$("#previous").animate({opacity:0.0}, SPEED);
 				$("#next").animate({opacity:0.0}, SPEED);
 				if ($(activeTab + " .presentScore").length == 0) {
-					$(activeTab + " .table-responsive").hide();
 					$(activeTab).append($(".presentScore"));
-					$(activeTab + " .presentScore").show();
 				}
+				$(activeTab + " .table-responsive").hide();
+				$(activeTab + " .presentScore").show();
 				var score = myQuiz.getScore();
 				$(activeTab + " .lead").html("Your final score is <span class='label label-primary'>" + score + "%.</span>");
 				if (score > 30.0) {
@@ -311,7 +311,7 @@
 						</div>
 					</a>
 					<div style="" class="caption">
-						<p class="text-justify">If you're like this guy -- Russian-Italian Jewish, with hair covering every inch and a bonafide man-bun in the post-Wall era -- then we suggest you sign up already.</p>
+						<p class="text-justify">If you're like this guy -- a sexy Russian-Italian Jewish gentleman, with hair covering every inch and a bonafide man-bun in the post-"Wall" era -- then we suggest you sign up already.</p>
 					</div>
 				</div>
 			</div>
