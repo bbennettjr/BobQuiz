@@ -134,34 +134,39 @@
 				//Get the quiz from the applet
 				activeTab = quizApplet.getActiveTab();
 				myQuiz = quizApplet.getActiveQuiz();
-				var question = myQuiz.getQuestion();
-				var currentQuestion = myQuiz.getCurrentQuestion();
-				var numberAnswered = myQuiz.numberAnswered();
-				var choices = question.choices;
-				var myProgress = myQuiz.progress();
-				//Index and populate the prompt and answer choices
-				$(activeTab + " #prompt").text(question.prompt);
-				for (var i =  NUMBER_OF_CHOICES - 1; i >= 0; i--) {
-					$(activeTab + " #choice_" + i + "_text").text(choices[i]);
+			
+				//Presenting score 
+				if (myQuiz.toPresent) {
+					presentScore();
+				} else { //Not presenting Score
+					var question = myQuiz.getQuestion();
+					var currentQuestion = myQuiz.getCurrentQuestion();
+					var numberAnswered = myQuiz.numberAnswered();
+					var choices = question.choices;
+
+					//Ensure nav buttons are visibile
+					$("#previous").animate({opacity:1.0}, SPEED);
+					$("#next").animate({opacity:1.0}, SPEED);
+					//Index and populate the prompt and answer choices
+					$(activeTab + " #prompt").text(question.prompt);
+					for (var i =  NUMBER_OF_CHOICES - 1; i >= 0; i--) {
+						$(activeTab + " #choice_" + i + "_text").text(choices[i]);
+					}
+					//When backpeddling, display the previously selected answers
+					if (currentQuestion < numberAnswered) {
+						$(activeTab + " #choices tr").eq(myQuiz.getAnswer()).addClass("success"); 
+						$("#next").removeClass("disabled");
+						if (currentQuestion === 0) {
+							$("#previous").addClass("disabled");
+						} else {$("#previous").removeClass("disabled");}
+					}
+					//Disable Next button for forward progress
+					if (currentQuestion >= numberAnswered) {
+						$("#next").addClass("disabled");
+						if (currentQuestion >= 1) {$("#previous").removeClass("disabled");}
+					}
+					$(activeTab + " .table-responsive").animate({opacity:1.0}, SPEED);				}
 				}
-				//When backpeddling, display the previously selected answers
-				if (currentQuestion < numberAnswered) {
-					$(activeTab + " #choices tr").eq(myQuiz.getAnswer()).addClass("success"); 
-					$("#next").removeClass("disabled");
-					if (currentQuestion === 0) {
-						$("#previous").addClass("disabled");
-					} else {$("#previous").removeClass("disabled");}
-				}
-				//Disable Next button for forward progress
-				if (currentQuestion >= numberAnswered) {
-					$("#next").addClass("disabled");
-					if (currentQuestion >= 1) {$("#previous").removeClass("disabled");}
-				}
-				//Update Progress bar display
-				$("#progressBar").attr("style", "min-width: 2em; width:" + myProgress + "%");
-				$("#progressBar span").text(myProgress + "%");
-				$(activeTab + " .table-responsive").animate({opacity:1.0}, SPEED);
-			}
 
 			// Next button to progress through the quiz
 			$("#next").click(function() {
@@ -171,18 +176,17 @@
 				}
 				else {
 					//log answer and prep for next question
-					var myAnswer = selected.attr("id");
-					myAnswer = parseInt(myAnswer);
+					// var myAnswer = selected.attr("id");
+					// myAnswer = parseInt(myAnswer);
 					$(activeTab + " #choices tr").removeClass("success");
+					myQuiz.incrQuestionNumber();
 					//Progress < 100 means continue the quiz, else present the final score
-					if (myQuiz.progress() < 100) {
-						myQuiz.setAnswer(myAnswer); 
-						myQuiz.incrQuestionNumber();
+					if (myQuiz.progress() == 100) {
+						myQuiz.presentScore();
+						// myQuiz.setAnswer(myAnswer); 
 						//do quick animation of transition first
-						$(activeTab + " .table-responsive").animate({opacity:0.0}, SPEED, updateUI);
-					} else {
-						$(activeTab + " .table-responsive").animate({opacity:0.0}, SPEED, presentScore);
-					}
+					} 
+					$(activeTab + " .table-responsive").animate({opacity:0.0}, SPEED, updateUI);
 				}
 			});
 
@@ -199,60 +203,58 @@
 
 			// Toggle selection of an answer, specific to the presented quiz
 			$(activeTab + " #choices tr").click(function() {
+				//Update Progress bar display
+				var myProgress;	
+				//Select/toggle answer						
 				$(this).toggleClass("success");
 				$(this).siblings("tr.success").toggleClass("success");
+				//Set or de-set answer
 				if ($(activeTab + " #choices tr.success").length == 0) {
-					$("#next").addClass("disabled");				
+					$("#next").addClass("disabled");	
 				} else {
-					$("#next").removeClass("disabled");									
+					//Log answer and update progress bar
+					$("#next").removeClass("disabled");	
+					myQuiz.setAnswer(parseInt($(this).attr("id"))); 
+				}
+				myProgress = myQuiz.progress();	
+				$("#progressBar").attr("style", "min-width: 2em; width:" + myProgress + "%");
+				$("#progressBar span").text(myProgress + "%");	
+				//Update Next button if quiz is about to end
+				if (myProgress == 100) {
+					$("#next").html("<a href='#'>Submit <span class='glyphicon glyphicon-ok'></span></a>");
+				} else {
+					$("#next").html("<a href='#'>Next <span class='glyphicon glyphicon-chevron-right'></span></a>");
 				}
 			});
 
+			// Present the score after submit
 			function presentScore() {
-				var final = document.getElementById("final");
-				var score = tallyScore();
-				var totalQuestions = guysQuestions.length;
-				var percentScore = Math.round(100 * score / totalQuestions);
-				if (percentScore > 80.0) {
-					$("#prompt").text("Wow! How do you know all of Bob's secrets? Are you God?");
-				} else if (percentScore > 45.0) {
-					$("#prompt").text("Definitely cheating off of Hector.");
-				} else if (percentScore > 25.0) {
-					$("#prompt").text("Mickey still nose more than you.");
-				} else {
-					$("#prompt").text("Who is this? Someone call security...Odie!");
+				$("#previous").animate({opacity:0.0}, SPEED);
+				$("#next").animate({opacity:0.0}, SPEED);
+				if ($(activeTab + " #presentScore").length == 0) {
+					$(activeTab + " .table-responsive").hide();
+					$(activeTab).append($("#presentScore"));
+					$("#presentScore").show();
 				}
-				$("#container").animate({opacity:1.0}, SPEED);
-				$("#container_choices").hide();
-				$("#back").hide();
-				$("#counter").hide();
-				$("#next").hide();
-				$("#container_prompt").append(final);
-				$("#final").show();
-				$("#reset").show();
-				$("#finalDisplay").text("Your final score is " + percentScore + "%!\n" + "You correctly answered " + score + " / " + totalQuestions + ".");
+				var score = myQuiz.getScore();
+				$("#presentScore .lead").html("Your final score is <span class='label label-success'>" + score + "%</span>!<br/>" + "You correctly answered " + score + " / " + myQuiz.numberAnswered() + ".");
+				if (score > 30.0) {
+					$("#presentScore .small").text("Wow! How do you know all secrets? Are you God?");
+				} else if (score > 15.0) {
+					$("#presentScore .small").text("Definitely cheating off of Hector.");
+				} else if (score > 5.0) {
+					$("#presentScore .small").text("Mickey still nose more than you.");
+				} else {
+					$("#presentScore .small").text("Who is this? Someone call security...Odie!");
+				}
 			}
 
-			function tallyScore() {
-				var tally = 0;
-				for (var i = 0; i < guysQuestions.length - 1; i++) {
-					if (answers[i] == guysQuestions[i].correctAnswer) {
-						tally++;
-					}
-				}
-				return tally;
-			}	
-
+			// Reset the quiz and start over
 			$("#reset").click(function() {
-				$("#container").animate({opacity:0.0}, 2 * SPEED, updateUI);
-				$("#container_choices").show();
-				$("#back").show();
-				$("#counter").show();
-				$("#next").show();
-				$("#final").hide();
-				$("#reset").hide();
-				currentQuestion = 0;
-				answers = new Array();
+				//First reset the quiz
+				myQuiz.reset();
+				$(activeTab + " #presentScore").hide();
+				$(activeTab + " .table-responsive").show().animate({opacity:1.0}, SPEED);
 			});
 
 			// Manually show the tabs and set next activeTab and activeQuiz
@@ -454,7 +456,7 @@
 	 <div id="quiz" class="container" style="display: none;">
 	 <!-- Header -->
 	 <div class="page-header">
-	 	<h1>Take the Campbell Quiz<small>Test your knowledge of this exceptional family</small></h1>
+	 	<h1>Campbell Quiz <small>Test your knowledge of this magnetic family</small></h1>
 	 </div>
 	 	<!-- Tab navigator -->
 	 	<p>
@@ -502,7 +504,13 @@
 	 		aria-valuemin="0" aria-valuemax="100" style="min-width: 2em; width:2%;"><span>0%</span></div>
 	 	</div>
 	 </div>
-
+	 <!-- Present Score -->
+	 <div id="presentScore" class="container text-center" style="display: none;">
+	 	<h3>Congratulations!</h3>
+	 	<p class="lead"></p>
+	 	<p class="small"></p>
+	 	<button type="button" id="reset" class="btn btn-success">Reset</button>
+	 </div>
 	<!-- Bob Quotes -->
 	<div class="container">
 		<blockquote>

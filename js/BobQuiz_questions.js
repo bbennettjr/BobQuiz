@@ -69,6 +69,7 @@
 		function Quiz(name, ref, questions) {
 			this.name = name;
 			this.questions = questions;
+			this.toPresent = false;
 			var ref = ref;
 			var correctAnswers = setCorrectAnswers(questions);
 			var answers = [];
@@ -82,7 +83,7 @@
 			function setCorrectAnswers(myQuestions) {
 				var corAns = new Array();
 				var i = 0;
-				for (i; i < myQuestions.length - 1; i++) {
+				for (i; i < myQuestions.length; i++) {
 					corAns.push(myQuestions[i].correctAnswer);
 				}
 				return corAns;
@@ -112,11 +113,7 @@
 			}
 			//Add new answer
 			this.setAnswer = function(ans) {
-				if (questionNumber === answers.length) {
-					answers.push(parseInt(ans));
-				} else {
-					answers[questionNumber] = parseInt(ans);
-				}
+				answers[questionNumber] = ans;
 			}
 			//Get answer 
 			this.getAnswer = function() {
@@ -125,8 +122,12 @@
 			this.numberAnswered = function() {
 				return answers.length;
 			}
+			//To present the score or not
+			this.presentScore = function() {
+				this.toPresent = true;
+			}
 			//Calculate score
-			this.calcScore = function() {
+			calcScore = function() {
 				var myScore = 0;
 				var i = 0;
 				for (i; i < questions.length - 1; i++) {
@@ -134,15 +135,23 @@
 						myScore++;
 					}
 				}
-				score = Math.round(100 * myScore / this.questions.length);
+				score = Math.round(100 * myScore / (this.questions.length - 1));
 			}
 			//Get score
 			this.getScore = function() {
+				calcScore();
 				return score;
 			}
 			//Progress
 			this.progress = function() {
-				return Math.round(100 * questionNumber / this.questions.length);
+				return Math.round(100 * answers.length / this.questions.length);
+			}
+			//Reset Quiz
+			this.reset = function() {
+				this.toPresent = false;
+				answers = [];
+				questionNumber = 0;
+				score = 0;
 			}
 		}
 
