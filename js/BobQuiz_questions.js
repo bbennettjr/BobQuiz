@@ -199,6 +199,7 @@
 		quotesObj.addQuote("Weeknight Bob", "Hoping The Kids Leave", "Why does this guy keep hugging me?");
 		quotesObj.addQuote("Mikayla", "Taking the World by Storm", "*...quietly smiling...*");
 		quotesObj.addQuote("Kaitlyn", "Farm Politics", "I fell off Bernie because his belly is too fat.");
+		quotesObj.addQuote("Kaitlyn", "Stratton Antics", "That's lit.");
 		quotesObj.addQuote("Diane", "Dinnertime", "Oh my god this is so lite, fluffy and delicious!");
 		quotesObj.addQuote("Diane", "Diane's Outlook on Life", "It's a BEAUTIFUL day!");
 		quotesObj.addQuote("Mickey", "No Touching", "Woof Woof Woof!");
